@@ -617,6 +617,255 @@ footer {
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: rgba(0,180,255,0.3); border-radius: 10px; }
 
+/* ===== MULTI-LANGUAGE LOADER OVERLAY ===== */
+#lang-loader {
+  position: fixed; inset: 0;
+  background: var(--bg);
+  z-index: 20000;
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column; gap: 24px;
+  opacity: 0; visibility: hidden;
+  transition: opacity 0.35s ease, visibility 0.35s;
+}
+#lang-loader.active { opacity: 1; visibility: visible; }
+#lang-loader.fade-out { opacity: 0; visibility: hidden; }
+.lang-ring-outer {
+  position: relative; width: 110px; height: 110px;
+  display: flex; align-items: center; justify-content: center;
+}
+.lang-ring-outer::before {
+  content: '';
+  position: absolute; inset: 0; border-radius: 50%;
+  border: 2px solid transparent;
+  border-top-color: var(--accent);
+  border-right-color: var(--accent2);
+  animation: spin 0.8s linear infinite;
+  box-shadow: var(--glow);
+}
+.lang-ring-outer::after {
+  content: '';
+  position: absolute; inset: 12px; border-radius: 50%;
+  border: 1px dashed rgba(0,180,255,0.25);
+  animation: spin 2s linear infinite reverse;
+}
+#lang-display {
+  font-size: 2.4rem; font-weight: 800;
+  letter-spacing: 0.04em;
+  background: linear-gradient(135deg, var(--accent), var(--accent2), var(--accent3));
+  background-size: 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradShift 2s ease infinite;
+  min-width: 220px; text-align: center;
+  transition: opacity 0.12s ease;
+}
+#lang-display.flash { opacity: 0; }
+.lang-subtitle {
+  font-family: var(--font-mono); font-size: 0.7rem;
+  color: var(--accent); letter-spacing: 0.25em;
+  animation: pulse 1s ease infinite;
+}
+.lang-progress-bar {
+  width: 200px; height: 2px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 10px; overflow: hidden;
+}
+.lang-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  border-radius: 10px;
+  width: 0%;
+  transition: width 0.1s linear;
+  box-shadow: 0 0 8px rgba(0,180,255,0.6);
+}
+
+/* ===== CHATBOT ===== */
+#chatbot-toggle {
+  position: fixed; bottom: 28px; right: 28px;
+  width: 60px; height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  z-index: 5000;
+  box-shadow: 0 0 24px rgba(0,180,255,0.5), 0 4px 20px rgba(0,0,0,0.4);
+  transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s;
+  animation: botIdle 3s ease-in-out infinite;
+}
+@keyframes botIdle {
+  0%,100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-5px) scale(1.03); }
+}
+#chatbot-toggle:hover {
+  animation: none;
+  transform: scale(1.12);
+  box-shadow: 0 0 36px rgba(0,180,255,0.7), 0 6px 30px rgba(0,0,0,0.4);
+}
+#chatbot-toggle svg { width: 28px; height: 28px; fill: #fff; transition: transform 0.3s; }
+#chatbot-toggle.open svg { transform: rotate(90deg); }
+.chatbot-pulse {
+  position: absolute; inset: -6px; border-radius: 50%;
+  border: 2px solid rgba(0,180,255,0.4);
+  animation: pulsRing 2s ease-out infinite;
+}
+@keyframes pulsRing {
+  0% { transform: scale(1); opacity: 0.8; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+
+#chatbot-window {
+  position: fixed; bottom: 102px; right: 28px;
+  width: 360px; max-height: 520px;
+  background: #070f24;
+  border: 1px solid rgba(0,180,255,0.3);
+  border-radius: 20px;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.6), var(--glow);
+  display: flex; flex-direction: column;
+  z-index: 4999;
+  overflow: hidden;
+  transform: scale(0.85) translateY(20px);
+  transform-origin: bottom right;
+  opacity: 0; visibility: hidden;
+  transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+}
+#chatbot-window.open { transform: scale(1) translateY(0); opacity: 1; visibility: visible; }
+
+.chat-header {
+  padding: 16px 18px;
+  background: linear-gradient(135deg, rgba(0,180,255,0.12), rgba(124,58,255,0.12));
+  border-bottom: 1px solid rgba(0,180,255,0.15);
+  display: flex; align-items: center; gap: 12px;
+  flex-shrink: 0;
+}
+.chat-header-avatar {
+  width: 38px; height: 38px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 0 12px rgba(0,180,255,0.4);
+}
+.chat-header-avatar svg { width: 20px; height: 20px; fill: #fff; }
+.chat-header-info { flex: 1; }
+.chat-header-name { font-size: 0.88rem; font-weight: 700; color: #fff; }
+.chat-header-status {
+  font-size: 0.68rem; font-family: var(--font-mono);
+  color: var(--accent3); display: flex; align-items: center; gap: 5px;
+}
+.chat-header-status::before {
+  content: ''; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--accent3); box-shadow: 0 0 6px var(--accent3);
+  display: inline-block;
+}
+.chat-close-btn {
+  background: none; border: none; cursor: pointer;
+  color: var(--muted); font-size: 1.2rem; padding: 4px;
+  transition: color 0.2s;
+}
+.chat-close-btn:hover { color: var(--accent); }
+
+#chat-messages {
+  flex: 1; overflow-y: auto; padding: 16px;
+  display: flex; flex-direction: column; gap: 12px;
+  scroll-behavior: smooth;
+}
+#chat-messages::-webkit-scrollbar { width: 4px; }
+#chat-messages::-webkit-scrollbar-thumb { background: rgba(0,180,255,0.2); border-radius: 10px; }
+
+.chat-msg {
+  display: flex; gap: 8px; align-items: flex-end;
+  animation: msgIn 0.25s ease both;
+}
+@keyframes msgIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.chat-msg.user { flex-direction: row-reverse; }
+.chat-bubble {
+  max-width: 82%; padding: 10px 14px;
+  border-radius: 16px; font-size: 0.84rem; line-height: 1.55;
+}
+.chat-msg.bot .chat-bubble {
+  background: rgba(0,180,255,0.09);
+  border: 1px solid rgba(0,180,255,0.18);
+  color: var(--text); border-bottom-left-radius: 4px;
+}
+.chat-msg.user .chat-bubble {
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  color: #fff; border-bottom-right-radius: 4px;
+  box-shadow: 0 4px 14px rgba(0,180,255,0.25);
+}
+.chat-avatar {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; font-size: 0.75rem;
+}
+.chat-typing {
+  display: flex; gap: 4px; align-items: center; padding: 4px 2px;
+}
+.chat-typing span {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--accent); opacity: 0.6;
+  animation: typingDot 1.2s ease infinite;
+}
+.chat-typing span:nth-child(2) { animation-delay: 0.2s; }
+.chat-typing span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes typingDot {
+  0%,60%,100% { transform: translateY(0); opacity: 0.6; }
+  30% { transform: translateY(-5px); opacity: 1; }
+}
+
+.chat-suggestions {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  padding: 4px 0 2px;
+}
+.chat-suggestion-btn {
+  background: rgba(0,180,255,0.07);
+  border: 1px solid rgba(0,180,255,0.2);
+  border-radius: 100px; padding: 5px 12px;
+  font-size: 0.72rem; font-family: var(--font-mono);
+  color: var(--accent); cursor: pointer;
+  transition: all 0.2s; white-space: nowrap;
+}
+.chat-suggestion-btn:hover {
+  background: rgba(0,180,255,0.18);
+  border-color: var(--accent);
+  box-shadow: 0 0 10px rgba(0,180,255,0.2);
+}
+
+.chat-input-area {
+  padding: 12px 14px;
+  border-top: 1px solid rgba(0,180,255,0.1);
+  display: flex; gap: 10px; align-items: center;
+  flex-shrink: 0;
+}
+#chat-input {
+  flex: 1; background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(0,180,255,0.2);
+  border-radius: 10px; padding: 9px 14px;
+  color: var(--text); font-size: 0.84rem;
+  font-family: var(--font-display);
+  outline: none; resize: none; max-height: 80px; min-height: 38px;
+  transition: border-color 0.2s;
+}
+#chat-input:focus { border-color: rgba(0,180,255,0.5); }
+#chat-input::placeholder { color: var(--muted); }
+#chat-send {
+  width: 38px; height: 38px; border-radius: 10px;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  border: none; cursor: pointer; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 0 14px rgba(0,180,255,0.3);
+}
+#chat-send:hover { transform: scale(1.1); box-shadow: 0 0 20px rgba(0,180,255,0.5); }
+#chat-send svg { width: 16px; height: 16px; fill: #fff; }
+
+@media (max-width: 480px) {
+  #chatbot-window { width: calc(100vw - 24px); right: 12px; bottom: 92px; }
+  #chatbot-toggle { bottom: 18px; right: 18px; }
+}
+
 /* ===== MOBILE NAV ===== */
 .hamburger { display: none; background: none; border: none; color: var(--accent); font-size: 1.5rem; cursor: pointer; }
 @media (max-width: 768px) {
@@ -828,6 +1077,45 @@ footer {
   <div class="footer-text">© 2026 <span>Ramgopal M.</span> — Crafted with  & Python</div>
   <div class="footer-text">Data Scientist · AI/ML Engineer · <span>Tamil Nadu, India</span></div>
 </footer>
+
+<!-- MULTI-LANGUAGE LOADER OVERLAY -->
+<div id="lang-loader" aria-hidden="true">
+  <div class="lang-ring-outer"></div>
+  <div id="lang-display">RAMGOPAL</div>
+  <div class="lang-subtitle">LOADING PORTFOLIO...</div>
+  <div class="lang-progress-bar"><div class="lang-progress-fill" id="lang-progress"></div></div>
+</div>
+
+<!-- CHATBOT TOGGLE BUTTON -->
+<button id="chatbot-toggle" aria-label="Open portfolio assistant" title="Chat with Ram's AI Assistant">
+  <div class="chatbot-pulse"></div>
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h3a3 3 0 0 1 3 3v9a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3v-9a3 3 0 0 1 3-3h3V5.73A2 2 0 0 1 10 4a2 2 0 0 1 2-2zm-4 9a1 1 0 0 0-1 1v1a1 1 0 0 0 2 0v-1a1 1 0 0 0-1-1zm8 0a1 1 0 0 0-1 1v1a1 1 0 0 0 2 0v-1a1 1 0 0 0-1-1zm-4 4a3 3 0 0 0-2.6 1.5.5.5 0 0 0 .87.5A2 2 0 0 1 12 16a2 2 0 0 1 1.73 1 .5.5 0 0 0 .87-.5A3 3 0 0 0 12 15z"/>
+  </svg>
+</button>
+
+<!-- CHATBOT WINDOW -->
+<div id="chatbot-window" role="dialog" aria-label="Portfolio Assistant">
+  <div class="chat-header">
+    <div class="chat-header-avatar">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h3a3 3 0 0 1 3 3v9a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3v-9a3 3 0 0 1 3-3h3V5.73A2 2 0 0 1 10 4a2 2 0 0 1 2-2zm-4 9a1 1 0 0 0-1 1v1a1 1 0 0 0 2 0v-1a1 1 0 0 0-1-1zm8 0a1 1 0 0 0-1 1v1a1 1 0 0 0 2 0v-1a1 1 0 0 0-1-1zm-4 4a3 3 0 0 0-2.6 1.5.5.5 0 0 0 .87.5A2 2 0 0 1 12 16a2 2 0 0 1 1.73 1 .5.5 0 0 0 .87-.5A3 3 0 0 0 12 15z"/>
+      </svg>
+    </div>
+    <div class="chat-header-info">
+      <div class="chat-header-name">Ram's AI Assistant</div>
+      <div class="chat-header-status">Online · Portfolio Bot</div>
+    </div>
+    <button class="chat-close-btn" id="chat-close-btn" aria-label="Close chat">&#10005;</button>
+  </div>
+  <div id="chat-messages"></div>
+  <div class="chat-input-area">
+    <textarea id="chat-input" placeholder="Ask about Ram's skills, projects..." rows="1"></textarea>
+    <button id="chat-send" aria-label="Send message">
+      <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+    </button>
+  </div>
+</div>
 
 <!-- PROJECT MODAL -->
 <div class="modal-overlay" id="projectModal">
@@ -1083,6 +1371,606 @@ window.addEventListener('scroll', () => {
   const canvas = document.getElementById('neural-canvas');
   canvas.style.transform = `translateY(${y * 0.1}px)`;
 });
+
+// ===== MULTI-LANGUAGE LOADER =====
+(function() {
+  const langSequence = [
+    { text: 'राम गोपाल', label: 'Hindi' },
+    { text: 'ராம்கோபால்', label: 'Tamil' },
+    { text: 'రామ్ గోపాల్', label: 'Telugu' },
+    { text: 'ರಾಮ್ ಗೋಪಾಲ್', label: 'Kannada' },
+    { text: 'രാം ഗോപാൽ', label: 'Malayalam' },
+    { text: 'ਰਾਮ ਗੋਪਾਲ', label: 'Punjabi' },
+    { text: 'রাম গোপাল', label: 'Bengali' },
+    { text: 'رام گوپال', label: 'Urdu' },
+    { text: 'ラムゴパル', label: 'Japanese' },
+    { text: '람고팔', label: 'Korean' },
+    { text: 'RAMGOPAL', label: 'English' }
+  ];
+
+  const loader = document.getElementById('lang-loader');
+  const display = document.getElementById('lang-display');
+  const progress = document.getElementById('lang-progress');
+  const navLogo = document.querySelector('.nav-logo');
+
+  function runLangLoader() {
+    loader.classList.add('active');
+    let i = 0;
+    const total = langSequence.length;
+    const intervalMs = 120;
+
+    const interval = setInterval(() => {
+      display.classList.add('flash');
+      setTimeout(() => {
+        display.textContent = langSequence[i].text;
+        display.classList.remove('flash');
+        progress.style.width = ((i + 1) / total * 100) + '%';
+        i++;
+        if (i >= total) {
+          clearInterval(interval);
+          setTimeout(() => {
+            loader.classList.remove('active');
+            loader.classList.add('fade-out');
+            setTimeout(() => loader.classList.remove('fade-out'), 400);
+          }, 400);
+        }
+      }, 60);
+    }, intervalMs);
+  }
+
+  if (navLogo) {
+    navLogo.addEventListener('click', function(e) {
+      e.preventDefault();
+      runLangLoader();
+      setTimeout(() => { window.scrollTo({ top: 0, behavior: 'smooth' }); }, 200);
+    });
+  }
+})();
+
+// ===== AI CHATBOT — PRECISION INTENT ENGINE =====
+(function() {
+  const toggleBtn  = document.getElementById('chatbot-toggle');
+  const chatWindow = document.getElementById('chatbot-window');
+  const closeBtn   = document.getElementById('chat-close-btn');
+  const messagesEl = document.getElementById('chat-messages');
+  const inputEl    = document.getElementById('chat-input');
+  const sendBtn    = document.getElementById('chat-send');
+
+  // ─── PORTFOLIO DATA ────────────────────────────────────────────────────────
+  const DATA = {
+    personal: {
+      name: 'Ramgopal M.',
+      role: 'Data Scientist & AI/ML Engineer & Python Developer',
+      location: 'Tamil Nadu, India',
+      email: 'ramgopal.mohan09@email.com',
+      github: 'https://github.com/Ram092003',
+      linkedin: 'https://www.linkedin.com/in/ramgopal-m',
+      status: 'Open to Work — Actively seeking AI/ML & Data Science roles',
+      summary: 'End-to-end AI/ML practitioner specializing in intelligent system design — from raw data pipelines to deployed production models. Passionate about real-world impact through NLP, Computer Vision, and Generative AI.'
+    },
+    education: [
+      {
+        degree: 'B.Sc. in Data Science',
+        institution: 'Tamil Nadu, India',
+        year: '2021 – 2024',
+        grade: 'Completed',
+        highlights: ['Machine Learning', 'Deep Learning', 'Statistics', 'Python Programming', 'Data Visualization']
+      },
+      {
+        degree: 'AI/ML Self-Learning & Projects',
+        institution: 'Online Platforms (Coursera, Kaggle, YouTube)',
+        year: '2022 – Present',
+        grade: 'Ongoing',
+        highlights: ['LangChain & RAG Systems', 'TensorFlow & PyTorch', 'NLP & Transformers', 'Generative AI', 'Computer Vision']
+      }
+    ],
+    experience: [
+      {
+        title: 'AI/ML Project Developer',
+        type: 'Freelance / Self-directed',
+        duration: '2022 – Present',
+        location: 'Tamil Nadu, India',
+        points: [
+          'Built 7+ end-to-end AI/ML applications across NLP, CV, and predictive analytics',
+          'Developed RAG-based chatbots using LangChain, MongoDB, and Streamlit',
+          'Implemented LSTM, CNN, and Scikit-learn models for real-world classification & prediction tasks',
+          'Worked with data pipelines, model training, evaluation, and deployment'
+        ]
+      },
+      {
+        title: 'Open Source Contributor',
+        type: 'GitHub Projects',
+        duration: '2022 – Present',
+        location: 'Remote',
+        points: [
+          'Maintained 7+ public repositories covering ML, NLP, and Deep Learning',
+          'Documented code with clear READMEs and reproducible instructions',
+          'Actively exploring new AI tools, frameworks, and research papers'
+        ]
+      }
+    ],
+    skills: {
+      core: [
+        { name: 'Python',                 level: 92, icon: '🐍' },
+        { name: 'Machine Learning',       level: 88, icon: '⚙️' },
+        { name: 'Artificial Intelligence',level: 85, icon: '🤖' },
+        { name: 'Deep Learning',          level: 82, icon: '🧠' },
+        { name: 'SQL',                    level: 80, icon: '🗄️' },
+        { name: 'NLP',                    level: 78, icon: '💬' },
+        { name: 'OpenCV',                 level: 75, icon: '👁️' }
+      ],
+      tools: ['VS Code (90%)', 'Git (85%)', 'GitHub (85%)', 'Jupyter (92%)'],
+      frameworks: ['TensorFlow', 'PyTorch', 'LangChain', 'Streamlit', 'Scikit-learn', 'Pandas', 'NumPy', 'OpenCV', 'FastAPI'],
+      domains: ['NLP', 'Computer Vision', 'Generative AI', 'RAG Pipelines', 'Time-Series Forecasting', 'Data Analytics', 'HR Analytics']
+    },
+    projects: [
+      {
+        id: 'banking',
+        title: 'Banking Exam AI Prep App',
+        emoji: '🏦',
+        tags: ['Python', 'Streamlit', 'MongoDB', 'AI', 'RAG'],
+        desc: 'AI-powered banking exam preparation platform with topic-wise practice, mock tests, performance analytics, and an AI study planner. Features a custom weak-topic trainer and adaptive difficulty engine.',
+        github: 'https://github.com/Ram092003/Banikng--Assitance.git',
+        highlight: 'Adaptive AI difficulty engine'
+      },
+      {
+        id: 'healthcare',
+        title: 'AI Healthcare Assistant Chatbot',
+        emoji: '🏥',
+        tags: ['Python', 'RAG', 'LangChain', 'AI', 'Streamlit'],
+        desc: 'Intelligent healthcare chatbot providing medical guidance, medication suggestions for common conditions, precautionary advice, and health recommendations using RAG architecture.',
+        github: 'https://github.com/Ram092003/HealthCare_Chatbot.git',
+        highlight: 'RAG-based medical Q&A'
+      },
+      {
+        id: 'python-chatbot',
+        title: 'Python Learning Chatbot',
+        emoji: '🐍',
+        tags: ['Python', 'NLP', 'AI', 'RAG'],
+        desc: 'Interactive chatbot for beginner Python learners — offers conversational explanations, code examples, and guided topic progression through RAG-powered responses.',
+        github: 'https://github.com/Ram092003/Python-RAG-Chatbot.git',
+        highlight: 'Guided conversational learning'
+      },
+      {
+        id: 'sentiment',
+        title: 'LSTM Sentiment Analysis',
+        emoji: '🎬',
+        tags: ['LSTM', 'Deep Learning', 'NLP', 'Python'],
+        desc: 'Deep learning model using LSTM architecture to classify movie reviews as positive, negative, or neutral. Trained on IMDB dataset with high classification accuracy.',
+        github: 'https://github.com/Ram092003/LSTM-Sentiment-Analysis.git',
+        highlight: 'LSTM on IMDB dataset'
+      },
+      {
+        id: 'currency',
+        title: 'Currency Classification System',
+        emoji: '💰',
+        tags: ['Deep Learning', 'CNN', 'Python'],
+        desc: 'CNN-based deep learning model that classifies Indian currency notes (₹10–₹500) including old and new variants using image recognition — real-world computer vision application.',
+        github: 'https://github.com/Ram092003/currency_classifier.git',
+        highlight: 'CNN image recognition'
+      },
+      {
+        id: 'stock',
+        title: 'Stock Market Prediction',
+        emoji: '📈',
+        tags: ['Machine Learning', 'Time Series', 'Python', 'Pandas'],
+        desc: 'ML model analyzing historical stock data to forecast future price trends using time-series techniques including ARIMA and regression-based approaches.',
+        github: 'https://github.com/Ram092003/Stock_Market_Prediction.git',
+        highlight: 'Time-series forecasting'
+      },
+      {
+        id: 'attrition',
+        title: 'Employee Attrition Prediction',
+        emoji: '📊',
+        tags: ['Machine Learning', 'HR Analytics', 'Python', 'Scikit-learn'],
+        desc: 'Predictive ML model identifying employees at risk of leaving the organization using HR data, feature engineering, and classification algorithms.',
+        github: 'https://github.com/Ram092003/Employee-attrition-prediction.git',
+        highlight: 'HR data + classification'
+      }
+    ],
+    contact: {
+      email: 'ramgopal.mohan09@email.com',
+      github: 'https://github.com/Ram092003',
+      linkedin: 'https://www.linkedin.com/in/ramgopal-m',
+      location: 'Tamil Nadu, India'
+    }
+  };
+
+  // ─── HTML CARD RENDERERS ───────────────────────────────────────────────────
+  const S = `style="`;  // shorthand
+
+  function skillsCard() {
+    const bars = DATA.skills.core.map(s => `
+      <div style="margin-bottom:10px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+          <span style="font-size:0.78rem;color:#e8f4ff;">${s.icon} ${s.name}</span>
+          <span style="font-size:0.7rem;color:#00b4ff;font-family:monospace;">${s.level}%</span>
+        </div>
+        <div style="height:4px;background:rgba(255,255,255,0.07);border-radius:4px;overflow:hidden;">
+          <div style="width:${s.level}%;height:100%;background:linear-gradient(90deg,#00b4ff,#7c3aff);border-radius:4px;box-shadow:0 0 6px rgba(0,180,255,0.4);"></div>
+        </div>
+      </div>`).join('');
+
+    const tools = DATA.skills.tools.map(t =>
+      `<span style="background:rgba(0,180,255,0.08);border:1px solid rgba(0,180,255,0.2);border-radius:100px;padding:3px 10px;font-size:0.68rem;color:#00b4ff;font-family:monospace;">${t}</span>`
+    ).join('');
+
+    const fw = DATA.skills.frameworks.map(f =>
+      `<span style="background:rgba(124,58,255,0.08);border:1px solid rgba(124,58,255,0.2);border-radius:4px;padding:2px 8px;font-size:0.68rem;color:#a78bfa;font-family:monospace;">${f}</span>`
+    ).join('');
+
+    return `
+      <div style="font-size:0.82rem;font-weight:700;color:#00b4ff;letter-spacing:0.08em;margin-bottom:12px;">🛠️ SKILLS &amp; TECH STACK</div>
+      <div style="margin-bottom:14px;">${bars}</div>
+      <div style="font-size:0.7rem;color:#6b8aaa;font-family:monospace;margin-bottom:6px;">TOOLS</div>
+      <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px;">${tools}</div>
+      <div style="font-size:0.7rem;color:#6b8aaa;font-family:monospace;margin-bottom:6px;">FRAMEWORKS &amp; LIBRARIES</div>
+      <div style="display:flex;flex-wrap:wrap;gap:5px;">${fw}</div>`;
+  }
+
+  function projectsCard() {
+    const cards = DATA.projects.map((p, i) => `
+      <div style="background:rgba(0,180,255,0.04);border:1px solid rgba(0,180,255,0.13);border-radius:10px;padding:11px 13px;margin-bottom:8px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;">
+          <span style="font-size:0.82rem;font-weight:700;color:#e8f4ff;">${p.emoji} ${p.title}</span>
+          <span style="font-size:0.6rem;color:#7c3aff;font-family:monospace;">P_${String(i+1).padStart(2,'0')}</span>
+        </div>
+        <div style="font-size:0.72rem;color:rgba(232,244,255,0.6);line-height:1.5;margin-bottom:7px;">${p.desc}</div>
+        <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:7px;">
+          ${p.tags.map(t=>`<span style="background:rgba(0,180,255,0.07);border:1px solid rgba(0,180,255,0.15);border-radius:3px;padding:2px 7px;font-size:0.62rem;color:#6b8aaa;font-family:monospace;">${t}</span>`).join('')}
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;">
+          <span style="font-size:0.65rem;color:#00ffcc;font-family:monospace;">✦ ${p.highlight}</span>
+          <a href="${p.github}" target="_blank" style="font-size:0.65rem;color:#00b4ff;font-family:monospace;text-decoration:none;">GitHub →</a>
+        </div>
+      </div>`).join('');
+
+    return `
+      <div style="font-size:0.82rem;font-weight:700;color:#00b4ff;letter-spacing:0.08em;margin-bottom:10px;">🚀 FEATURED PROJECTS (${DATA.projects.length})</div>
+      ${cards}`;
+  }
+
+  function educationCard() {
+    const cards = DATA.education.map(e => `
+      <div style="background:rgba(124,58,255,0.05);border:1px solid rgba(124,58,255,0.18);border-radius:10px;padding:13px;margin-bottom:10px;">
+        <div style="font-size:0.85rem;font-weight:700;color:#e8f4ff;margin-bottom:3px;">🎓 ${e.degree}</div>
+        <div style="font-size:0.72rem;color:#a78bfa;font-family:monospace;margin-bottom:2px;">${e.institution}</div>
+        <div style="display:flex;gap:10px;margin-bottom:8px;">
+          <span style="font-size:0.68rem;color:#6b8aaa;font-family:monospace;">📅 ${e.year}</span>
+          <span style="font-size:0.68rem;color:#00ffcc;font-family:monospace;">✓ ${e.grade}</span>
+        </div>
+        <div style="font-size:0.68rem;color:#6b8aaa;font-family:monospace;margin-bottom:5px;">KEY TOPICS</div>
+        <div style="display:flex;flex-wrap:wrap;gap:4px;">
+          ${e.highlights.map(h=>`<span style="background:rgba(124,58,255,0.1);border:1px solid rgba(124,58,255,0.2);border-radius:100px;padding:2px 9px;font-size:0.65rem;color:#a78bfa;font-family:monospace;">${h}</span>`).join('')}
+        </div>
+      </div>`).join('');
+
+    return `
+      <div style="font-size:0.82rem;font-weight:700;color:#00b4ff;letter-spacing:0.08em;margin-bottom:10px;">🎓 EDUCATION</div>
+      ${cards}`;
+  }
+
+  function experienceCard() {
+    const cards = DATA.experience.map(e => `
+      <div style="background:rgba(0,255,204,0.03);border:1px solid rgba(0,255,204,0.14);border-radius:10px;padding:13px;margin-bottom:10px;">
+        <div style="font-size:0.85rem;font-weight:700;color:#e8f4ff;margin-bottom:2px;">💼 ${e.title}</div>
+        <div style="font-size:0.72rem;color:#00ffcc;font-family:monospace;margin-bottom:2px;">${e.type}</div>
+        <div style="display:flex;gap:12px;margin-bottom:9px;">
+          <span style="font-size:0.67rem;color:#6b8aaa;font-family:monospace;">📅 ${e.duration}</span>
+          <span style="font-size:0.67rem;color:#6b8aaa;font-family:monospace;">📍 ${e.location}</span>
+        </div>
+        <ul style="padding-left:14px;margin:0;">
+          ${e.points.map(p=>`<li style="font-size:0.74rem;color:rgba(232,244,255,0.72);line-height:1.6;margin-bottom:3px;">${p}</li>`).join('')}
+        </ul>
+      </div>`).join('');
+
+    return `
+      <div style="font-size:0.82rem;font-weight:700;color:#00b4ff;letter-spacing:0.08em;margin-bottom:10px;">💼 EXPERIENCE</div>
+      ${cards}`;
+  }
+
+  function aboutCard() {
+    const p = DATA.personal;
+    return `
+      <div style="font-size:0.82rem;font-weight:700;color:#00b4ff;letter-spacing:0.08em;margin-bottom:10px;">👤 ABOUT RAMGOPAL M.</div>
+      <div style="background:rgba(0,180,255,0.05);border:1px solid rgba(0,180,255,0.15);border-radius:10px;padding:14px;">
+        <div style="font-size:0.9rem;font-weight:800;color:#fff;margin-bottom:4px;">${p.name}</div>
+        <div style="font-size:0.74rem;color:#00b4ff;font-family:monospace;margin-bottom:10px;">${p.role}</div>
+        <div style="font-size:0.8rem;color:rgba(232,244,255,0.75);line-height:1.65;margin-bottom:12px;">${p.summary}</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:0.68rem;font-family:monospace;">
+          <div><span style="color:#00b4ff;">location</span> → ${p.location}</div>
+          <div><span style="color:#00b4ff;">focus</span> → AI/ML Engineering</div>
+          <div><span style="color:#00b4ff;">languages</span> → Python, SQL</div>
+          <div><span style="color:#00ffcc;">status</span> → Available ✓</div>
+        </div>
+      </div>`;
+  }
+
+  function contactCard() {
+    const c = DATA.contact;
+    return `
+      <div style="font-size:0.82rem;font-weight:700;color:#00b4ff;letter-spacing:0.08em;margin-bottom:10px;">📬 CONTACT RAMGOPAL</div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <a href="mailto:${c.email}" style="display:flex;align-items:center;gap:10px;background:rgba(0,255,204,0.05);border:1px solid rgba(0,255,204,0.15);border-radius:9px;padding:11px 13px;text-decoration:none;transition:all 0.2s;">
+          <span style="font-size:1.1rem;">📧</span>
+          <div><div style="font-size:0.68rem;color:#6b8aaa;font-family:monospace;margin-bottom:1px;">EMAIL</div><div style="font-size:0.78rem;color:#00ffcc;">${c.email}</div></div>
+        </a>
+        <a href="${c.linkedin}" target="_blank" style="display:flex;align-items:center;gap:10px;background:rgba(10,102,194,0.07);border:1px solid rgba(10,102,194,0.2);border-radius:9px;padding:11px 13px;text-decoration:none;">
+          <span style="font-size:1.1rem;">💼</span>
+          <div><div style="font-size:0.68rem;color:#6b8aaa;font-family:monospace;margin-bottom:1px;">LINKEDIN</div><div style="font-size:0.78rem;color:#60a5fa;">linkedin.com/in/ramgopal-m</div></div>
+        </a>
+        <a href="${c.github}" target="_blank" style="display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:9px;padding:11px 13px;text-decoration:none;">
+          <span style="font-size:1.1rem;">🐙</span>
+          <div><div style="font-size:0.68rem;color:#6b8aaa;font-family:monospace;margin-bottom:1px;">GITHUB</div><div style="font-size:0.78rem;color:#e8f4ff;">github.com/Ram092003</div></div>
+        </a>
+        <div style="display:flex;align-items:center;gap:10px;background:rgba(0,180,255,0.04);border:1px solid rgba(0,180,255,0.12);border-radius:9px;padding:11px 13px;">
+          <span style="font-size:1.1rem;">📍</span>
+          <div><div style="font-size:0.68rem;color:#6b8aaa;font-family:monospace;margin-bottom:1px;">LOCATION</div><div style="font-size:0.78rem;color:#e8f4ff;">${c.location}</div></div>
+        </div>
+      </div>`;
+  }
+
+  function singleProjectCard(p) {
+    return `
+      <div style="font-size:0.82rem;font-weight:700;color:#00b4ff;letter-spacing:0.08em;margin-bottom:10px;">${p.emoji} PROJECT DETAIL</div>
+      <div style="background:rgba(0,180,255,0.04);border:1px solid rgba(0,180,255,0.18);border-radius:10px;padding:14px;">
+        <div style="font-size:0.9rem;font-weight:800;color:#fff;margin-bottom:6px;">${p.title}</div>
+        <div style="font-size:0.78rem;color:rgba(232,244,255,0.72);line-height:1.6;margin-bottom:10px;">${p.desc}</div>
+        <div style="font-size:0.68rem;color:#6b8aaa;font-family:monospace;margin-bottom:5px;">TECH STACK</div>
+        <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:10px;">
+          ${p.tags.map(t=>`<span style="background:rgba(0,180,255,0.08);border:1px solid rgba(0,180,255,0.18);border-radius:3px;padding:2px 8px;font-size:0.68rem;color:#00b4ff;font-family:monospace;">${t}</span>`).join('')}
+        </div>
+        <div style="font-size:0.68rem;color:#00ffcc;font-family:monospace;margin-bottom:10px;">✦ ${p.highlight}</div>
+        <a href="${p.github}" target="_blank" style="display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#00b4ff22,#7c3aff22);border:1px solid rgba(0,180,255,0.3);border-radius:6px;padding:7px 14px;font-size:0.75rem;color:#00b4ff;text-decoration:none;font-family:monospace;">🐙 View on GitHub →</a>
+      </div>`;
+  }
+
+  function resumeCard() {
+    return `
+      <div style="font-size:0.82rem;font-weight:700;color:#00b4ff;letter-spacing:0.08em;margin-bottom:10px;">📄 RESUME</div>
+      <div style="background:rgba(0,180,255,0.04);border:1px solid rgba(0,180,255,0.15);border-radius:10px;padding:14px;text-align:center;">
+        <div style="font-size:2rem;margin-bottom:8px;">📋</div>
+        <div style="font-size:0.82rem;color:rgba(232,244,255,0.8);margin-bottom:12px;">Ramgopal's resume is available for download directly from the portfolio.</div>
+        <div style="font-size:0.75rem;color:#00b4ff;font-family:monospace;">👆 Click the <strong style="color:#fff;">Resume</strong> button in the top navigation bar to download it instantly.</div>
+      </div>`;
+  }
+
+  function helpCard() {
+    const cmds = [
+      ['about','Who is Ramgopal'],['skills','Tech skills & tools'],
+      ['projects','All 7 projects'],['education','Academic background'],
+      ['experience','Work experience'],['contact','Contact details'],
+      ['resume','Download resume'],['github','GitHub profile'],
+      ['linkedin','LinkedIn profile'],['status','Availability']
+    ];
+    return `
+      <div style="font-size:0.82rem;font-weight:700;color:#00b4ff;letter-spacing:0.08em;margin-bottom:10px;">🗺️ WHAT I CAN HELP WITH</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;">
+        ${cmds.map(([cmd,label])=>`
+          <button onclick="document.getElementById('chat-input').value='${cmd}';document.getElementById('chat-send').click();"
+            style="background:rgba(0,180,255,0.06);border:1px solid rgba(0,180,255,0.15);border-radius:7px;padding:7px 8px;text-align:left;cursor:pointer;transition:all 0.2s;"
+            onmouseover="this.style.background='rgba(0,180,255,0.14)'" onmouseout="this.style.background='rgba(0,180,255,0.06)'">
+            <div style="font-size:0.72rem;color:#00b4ff;font-family:monospace;">${cmd}</div>
+            <div style="font-size:0.65rem;color:#6b8aaa;">${label}</div>
+          </button>`).join('')}
+      </div>`;
+  }
+
+  // ─── INTENT RESOLVER ──────────────────────────────────────────────────────
+  // Returns { type, payload? } — one exact category per query
+  function resolveIntent(raw) {
+    const q = raw.toLowerCase().replace(/[^\w\s]/g, ' ').trim();
+    const words = new Set(q.split(/\s+/));
+
+    // ── Greet
+    if (/^(hi|hello|hey|yo|sup|hola|namaste)$/.test(q) || /^(hi|hello|hey)\s/.test(q))
+      return { type: 'greet' };
+
+    // ── About / Who
+    if (/\b(who|about|introduce|yourself|ramgopal|ram|person|profile|bio|summary)\b/.test(q))
+      return { type: 'about' };
+
+    // ── Skills — strictly skills keywords only
+    if (/\b(skill|skills|tech|stack|technology|technologies|tool|tools|expertise|proficien|know|capable|language|languages|framework|frameworks|library|libraries)\b/.test(q) &&
+        !/\b(project|educat|experience|contact|github|linkedin|resume)\b/.test(q))
+      return { type: 'skills' };
+
+    // ── Education — strictly education keywords
+    if (/\b(educat|degree|college|university|course|courses|study|studied|academic|qualification|certification|certif|school|institution)\b/.test(q) &&
+        !/\b(project|skill|experience|contact)\b/.test(q))
+      return { type: 'education' };
+
+    // ── Experience — strictly experience keywords
+    if (/\b(experience|work|worked|job|jobs|career|background|history|employment|intern|internship|professional|role|roles)\b/.test(q) &&
+        !/\b(project|skill|educat|contact)\b/.test(q))
+      return { type: 'experience' };
+
+    // ── Contact
+    if (/\b(contact|email|reach|message|connect|touch|hire|phone|mail)\b/.test(q) &&
+        !/\b(project|skill|educat|experience)\b/.test(q))
+      return { type: 'contact' };
+
+    // ── Resume / CV
+    if (/\b(resume|cv|curriculum|download|pdf)\b/.test(q))
+      return { type: 'resume' };
+
+    // ── GitHub
+    if (/\b(github|git|repo|repositories|code|source)\b/.test(q) &&
+        !/\b(project|skill|educat|experience|contact)\b/.test(q))
+      return { type: 'github' };
+
+    // ── LinkedIn
+    if (/\b(linkedin|linked in|network|professional network)\b/.test(q))
+      return { type: 'linkedin' };
+
+    // ── Status / Availability
+    if (/\b(status|available|availability|open to work|hiring|looking for|opportunity|opportunities)\b/.test(q))
+      return { type: 'status' };
+
+    // ── Specific project lookup — search by title words and tags
+    for (const p of DATA.projects) {
+      const titleWords = p.title.toLowerCase().split(/\s+/).filter(w => w.length > 3);
+      const tagWords = p.tags.map(t => t.toLowerCase());
+      const allKeywords = [...titleWords, ...tagWords, p.id];
+      if (allKeywords.some(k => words.has(k) || q.includes(k))) {
+        return { type: 'project_detail', payload: p };
+      }
+    }
+
+    // ── All projects list
+    if (/\b(project|projects|built|created|portfolio|work|app|apps|application|applications|system|systems|model|models)\b/.test(q))
+      return { type: 'projects' };
+
+    // ── Help / unknown
+    if (/\b(help|menu|option|options|what can|what do|list|show me|guide)\b/.test(q))
+      return { type: 'help' };
+
+    // ── Positive feedback
+    if (/\b(thank|thanks|great|awesome|cool|nice|perfect|good|wow|amazing|excellent|well done|impressive)\b/.test(q))
+      return { type: 'thanks' };
+
+    // ── Goodbye
+    if (/\b(bye|goodbye|see you|later|exit|cya|take care)\b/.test(q))
+      return { type: 'bye' };
+
+    return { type: 'unknown', payload: raw };
+  }
+
+  // ─── RESPONSE DISPATCHER ─────────────────────────────────────────────────
+  function dispatch(intent) {
+    switch (intent.type) {
+      case 'greet':
+        return { html: false, text: `👋 Hello! I'm Ram's portfolio assistant.\n\nI give precise, category-specific answers. Try typing:\n\n• skills\n• projects\n• education\n• experience\n• contact\n\nWhat would you like to know?` };
+      case 'about':
+        return { html: true, content: aboutCard() };
+      case 'skills':
+        return { html: true, content: skillsCard() };
+      case 'projects':
+        return { html: true, content: projectsCard() };
+      case 'education':
+        return { html: true, content: educationCard() };
+      case 'experience':
+        return { html: true, content: experienceCard() };
+      case 'contact':
+        return { html: true, content: contactCard() };
+      case 'resume':
+        return { html: true, content: resumeCard() };
+      case 'project_detail':
+        return { html: true, content: singleProjectCard(intent.payload) };
+      case 'github':
+        return { html: false, text: `🐙 GitHub: github.com/Ram092003\n\nAll 7 projects are open-source. You'll find ML, NLP, Deep Learning, and Computer Vision repos with full documentation.` };
+      case 'linkedin':
+        return { html: false, text: `💼 LinkedIn: linkedin.com/in/ramgopal-m\n\nConnect with Ramgopal professionally for collaborations, internships, or job opportunities.` };
+      case 'status':
+        return { html: false, text: `✅ Status: ${DATA.personal.status}\n\nRamgopal is actively seeking AI/ML Engineering and Data Science roles. Contact him at ${DATA.personal.email} or connect on LinkedIn.` };
+      case 'thanks':
+        return { html: false, text: `😊 You're welcome! Need anything else?\n\nTry: skills · projects · education · experience · contact` };
+      case 'bye':
+        return { html: false, text: `👋 Thanks for visiting Ramgopal's portfolio! Feel free to return anytime. Have a great day! 🚀` };
+      case 'help':
+        return { html: true, content: helpCard() };
+      default:
+        return { html: true, content: helpCard() };
+    }
+  }
+
+  // ─── UI HELPERS ───────────────────────────────────────────────────────────
+  function addBotMessage(response) {
+    const wrapper = document.createElement('div');
+    wrapper.className = 'chat-msg bot';
+    if (response.html) {
+      wrapper.innerHTML = `<div class="chat-avatar">🤖</div><div class="chat-bubble" style="max-width:100%;padding:12px 13px;">${response.content}</div>`;
+    } else {
+      wrapper.innerHTML = `<div class="chat-avatar">🤖</div><div class="chat-bubble">${response.text.replace(/\n/g,'<br>')}</div>`;
+    }
+    messagesEl.appendChild(wrapper);
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+  }
+
+  function addUserMessage(text) {
+    const wrapper = document.createElement('div');
+    wrapper.className = 'chat-msg user';
+    wrapper.innerHTML = `<div class="chat-bubble">${text.replace(/</g,'&lt;')}</div>`;
+    messagesEl.appendChild(wrapper);
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+  }
+
+  function addTypingIndicator() {
+    const wrapper = document.createElement('div');
+    wrapper.className = 'chat-msg bot';
+    wrapper.id = 'typing-indicator';
+    wrapper.innerHTML = `<div class="chat-avatar">🤖</div><div class="chat-bubble"><div class="chat-typing"><span></span><span></span><span></span></div></div>`;
+    messagesEl.appendChild(wrapper);
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+    return wrapper;
+  }
+
+  function addSuggestions() {
+    const chips = ['skills', 'projects', 'education', 'experience', 'contact'];
+    const row = document.createElement('div');
+    row.className = 'chat-suggestions';
+    chips.forEach(s => {
+      const btn = document.createElement('button');
+      btn.className = 'chat-suggestion-btn';
+      btn.textContent = s;
+      btn.onclick = () => { row.remove(); handleUserMessage(s); };
+      row.appendChild(btn);
+    });
+    messagesEl.appendChild(row);
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+  }
+
+  // ─── MAIN HANDLER ─────────────────────────────────────────────────────────
+  function handleUserMessage(text) {
+    if (!text.trim()) return;
+    addUserMessage(text);
+    inputEl.value = '';
+    inputEl.style.height = 'auto';
+    const typing = addTypingIndicator();
+    const delay = 380 + Math.random() * 320;
+    setTimeout(() => {
+      typing.remove();
+      const intent = resolveIntent(text);
+      const response = dispatch(intent);
+      addBotMessage(response);
+    }, delay);
+  }
+
+  // ─── INIT ─────────────────────────────────────────────────────────────────
+  function initChat() {
+    messagesEl.innerHTML = '';
+    addBotMessage({
+      html: false,
+      text: `👋 Hi! I'm Ram's portfolio assistant.\n\nI give precise, category-specific answers — no mixed responses.\n\nJust type what you want to know:`
+    });
+    addSuggestions();
+  }
+
+  // ─── EVENTS ───────────────────────────────────────────────────────────────
+  toggleBtn.addEventListener('click', () => {
+    const isOpen = chatWindow.classList.toggle('open');
+    toggleBtn.classList.toggle('open', isOpen);
+    if (isOpen && messagesEl.children.length === 0) initChat();
+  });
+  closeBtn.addEventListener('click', () => {
+    chatWindow.classList.remove('open');
+    toggleBtn.classList.remove('open');
+  });
+  sendBtn.addEventListener('click', () => handleUserMessage(inputEl.value));
+  inputEl.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleUserMessage(inputEl.value); }
+  });
+  inputEl.addEventListener('input', () => {
+    inputEl.style.height = 'auto';
+    inputEl.style.height = Math.min(inputEl.scrollHeight, 80) + 'px';
+  });
+
+  // Cursor hover integration
+  [toggleBtn, chatWindow, sendBtn].forEach(el => {
+    el.addEventListener('mouseenter', () => document.getElementById('cursorRing').classList.add('hover'));
+    el.addEventListener('mouseleave', () => document.getElementById('cursorRing').classList.remove('hover'));
+  });
+})();
 </script>
 </body>
 </html>
