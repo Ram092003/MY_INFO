@@ -116,7 +116,7 @@ nav {
   letter-spacing: 0.05em;
 }
 .nav-logo span { color: var(--accent); }
-.nav-links { display: flex; gap: 32px; list-style: none; }
+.nav-links { display: flex; gap: 28px; list-style: none; }
 .nav-links a {
   color: var(--muted);
   text-decoration: none;
@@ -365,53 +365,6 @@ section { position: relative; z-index: 1; padding: 100px 0; }
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* ===== SKILLS ===== */
-#skills { background: transparent; }
-.skills-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 16px; margin-top: 50px;
-}
-.skill-card {
-  background: var(--glass);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 24px 16px;
-  text-align: center;
-  backdrop-filter: blur(20px);
-  transition: all 0.3s cubic-bezier(0.175,0.885,0.32,1.275);
-  cursor: default;
-  position: relative;
-  overflow: hidden;
-}
-.skill-card::before {
-  content: '';
-  position: absolute; inset: 0;
-  background: linear-gradient(135deg, rgba(0,180,255,0.06), rgba(124,58,255,0.06));
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-.skill-card:hover::before { opacity: 1; }
-.skill-card:hover {
-  transform: translateY(-8px) scale(1.03);
-  border-color: rgba(0,180,255,0.5);
-  box-shadow: var(--glow);
-}
-.skill-icon { font-size: 2.4rem; margin-bottom: 10px; display: block; }
-.skill-name { font-size: 0.78rem; font-family: var(--font-mono); color: var(--muted); }
-.skill-bar-wrap {
-  height: 3px; background: rgba(255,255,255,0.05);
-  border-radius: 10px; margin-top: 10px; overflow: hidden;
-}
-.skill-bar {
-  height: 100%;
-  background: linear-gradient(90deg, var(--accent), var(--accent2));
-  border-radius: 10px;
-  width: 0;
-  transition: width 1.2s ease;
-  box-shadow: 0 0 8px rgba(0,180,255,0.5);
-}
-
 /* ===== ABOUT ===== */
 #about { background: transparent; }
 .about-card {
@@ -451,6 +404,426 @@ section { position: relative; z-index: 1; padding: 100px 0; }
   transition: all 0.2s;
 }
 .cert-chip:hover { background: rgba(0,180,255,0.15); border-color: var(--accent); box-shadow: var(--glow); }
+
+/* ===== SKILLS ===== */
+#skills { background: transparent; }
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 16px; margin-top: 50px;
+}
+.skill-card {
+  background: var(--glass);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 24px 16px;
+  text-align: center;
+  backdrop-filter: blur(20px);
+  transition: all 0.3s cubic-bezier(0.175,0.885,0.32,1.275);
+  cursor: default;
+  position: relative;
+  overflow: hidden;
+}
+.skill-card::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(0,180,255,0.06), rgba(124,58,255,0.06));
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.skill-card:hover::before { opacity: 1; }
+.skill-card:hover {
+  transform: translateY(-8px) scale(1.03);
+  border-color: rgba(0,180,255,0.5);
+  box-shadow: var(--glow);
+}
+.skill-icon {
+  width: 44px; height: 44px;
+  margin: 0 auto 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.7rem;
+  position: relative;
+}
+.skill-icon svg {
+  width: 36px; height: 36px;
+}
+.skill-name { font-size: 0.78rem; font-family: var(--font-mono); color: var(--muted); }
+.skill-bar-wrap {
+  height: 3px; background: rgba(255,255,255,0.05);
+  border-radius: 10px; margin-top: 10px; overflow: hidden;
+}
+.skill-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  border-radius: 10px;
+  width: 0;
+  transition: width 1.2s ease;
+  box-shadow: 0 0 8px rgba(0,180,255,0.5);
+}
+
+/* ===== EDUCATION SECTION ===== */
+#education { background: transparent; padding: 100px 0; }
+
+.edu-timeline {
+  position: relative;
+  margin-top: 50px;
+  padding-left: 0;
+}
+
+.edu-timeline::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0; bottom: 0;
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, var(--accent), var(--accent2), transparent);
+  transform: translateX(-50%);
+}
+
+.edu-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 40px;
+  margin-bottom: 50px;
+  position: relative;
+}
+
+.edu-item:nth-child(odd) {
+  flex-direction: row;
+  padding-right: calc(50% + 40px);
+}
+
+.edu-item:nth-child(even) {
+  flex-direction: row-reverse;
+  padding-left: calc(50% + 40px);
+}
+
+.edu-dot {
+  position: absolute;
+  left: 50%;
+  top: 24px;
+  transform: translateX(-50%);
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  box-shadow: var(--glow);
+  z-index: 2;
+  animation: dotPulse 2s ease-in-out infinite;
+}
+
+.edu-dot::before {
+  content: '';
+  position: absolute; inset: -5px;
+  border-radius: 50%;
+  border: 1px solid rgba(0,180,255,0.3);
+  animation: dotRing 2s ease-in-out infinite;
+}
+
+@keyframes dotPulse {
+  0%,100% { box-shadow: 0 0 12px rgba(0,180,255,0.6), 0 0 30px rgba(0,180,255,0.2); }
+  50% { box-shadow: 0 0 20px rgba(0,180,255,0.9), 0 0 50px rgba(0,180,255,0.4); }
+}
+
+@keyframes dotRing {
+  0%,100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.4); opacity: 0; }
+}
+
+.edu-card {
+  background: var(--glass);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px 30px;
+  backdrop-filter: blur(20px);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.175,0.885,0.32,1.275);
+  width: 100%;
+}
+
+.edu-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+}
+
+.edu-card:hover::before { transform: scaleX(1); }
+
+.edu-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(0,180,255,0.4);
+  box-shadow: var(--glow);
+}
+
+.edu-card::after {
+  content: '';
+  position: absolute; top: -40px; right: -40px;
+  width: 120px; height: 120px;
+  background: radial-gradient(circle, rgba(0,180,255,0.08), transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.edu-year-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(0,180,255,0.1);
+  border: 1px solid rgba(0,180,255,0.2);
+  border-radius: 100px;
+  padding: 4px 12px;
+  font-size: 0.68rem;
+  font-family: var(--font-mono);
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+
+.edu-degree {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 5px;
+  line-height: 1.3;
+}
+
+.edu-institution {
+  font-size: 0.8rem;
+  font-family: var(--font-mono);
+  color: var(--accent2);
+  margin-bottom: 8px;
+  display: flex; align-items: center; gap: 6px;
+}
+
+.edu-grade {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 0.75rem; font-family: var(--font-mono);
+  color: var(--accent3);
+  margin-bottom: 14px;
+}
+
+.edu-highlights {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  margin-top: 12px;
+}
+
+.edu-tag {
+  background: rgba(124,58,255,0.08);
+  border: 1px solid rgba(124,58,255,0.2);
+  border-radius: 100px;
+  padding: 3px 10px;
+  font-size: 0.66rem;
+  font-family: var(--font-mono);
+  color: #a78bfa;
+  transition: all 0.2s;
+}
+
+.edu-tag:hover {
+  background: rgba(124,58,255,0.2);
+  border-color: var(--accent2);
+}
+
+/* ===== EXPERIENCE SECTION ===== */
+#experience { background: transparent; padding: 100px 0; }
+
+.exp-container {
+  margin-top: 50px;
+  position: relative;
+}
+
+.exp-line {
+  position: absolute;
+  left: 22px;
+  top: 20px; bottom: 20px;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--accent), var(--accent2), transparent);
+  border-radius: 2px;
+}
+
+.exp-item {
+  display: flex;
+  gap: 32px;
+  margin-bottom: 40px;
+  padding-left: 66px;
+  position: relative;
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: all 0.6s cubic-bezier(0.175,0.885,0.32,1.275);
+}
+
+.exp-item.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.exp-item:nth-child(2) { transition-delay: 0.15s; }
+.exp-item:nth-child(3) { transition-delay: 0.3s; }
+
+.exp-node {
+  position: absolute;
+  left: 11px;
+  top: 24px;
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 2px solid var(--accent);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 2;
+  box-shadow: 0 0 14px rgba(0,180,255,0.4);
+  transition: all 0.3s;
+}
+
+.exp-item:hover .exp-node {
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  box-shadow: var(--glow);
+  transform: scale(1.15);
+}
+
+.exp-node-icon {
+  font-size: 0.65rem;
+  color: var(--accent);
+  transition: color 0.3s;
+}
+
+.exp-item:hover .exp-node-icon { color: #fff; }
+
+.exp-card {
+  background: var(--glass);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px 30px;
+  backdrop-filter: blur(20px);
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.35s cubic-bezier(0.175,0.885,0.32,1.275);
+}
+
+.exp-card::before {
+  content: '';
+  position: absolute; left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: linear-gradient(to bottom, var(--accent), var(--accent2));
+  border-radius: 3px 0 0 3px;
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.4s ease;
+}
+
+.exp-card:hover::before { transform: scaleY(1); }
+
+.exp-card:hover {
+  transform: translateY(-5px) translateX(4px);
+  border-color: rgba(0,180,255,0.35);
+  box-shadow: var(--glow);
+}
+
+.exp-card-header {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  flex-wrap: wrap; gap: 10px;
+  margin-bottom: 14px;
+}
+
+.exp-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.3;
+}
+
+.exp-company {
+  font-size: 0.82rem;
+  font-family: var(--font-mono);
+  color: var(--accent);
+  margin-top: 3px;
+  display: flex; align-items: center; gap: 6px;
+}
+
+.exp-meta {
+  display: flex; flex-direction: column; align-items: flex-end; gap: 4px;
+}
+
+.exp-duration {
+  background: rgba(0,180,255,0.1);
+  border: 1px solid rgba(0,180,255,0.2);
+  border-radius: 100px;
+  padding: 4px 12px;
+  font-size: 0.68rem;
+  font-family: var(--font-mono);
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+.exp-location {
+  font-size: 0.68rem;
+  font-family: var(--font-mono);
+  color: var(--muted);
+  display: flex; align-items: center; gap: 4px;
+}
+
+.exp-type-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: rgba(124,58,255,0.1);
+  border: 1px solid rgba(124,58,255,0.2);
+  border-radius: 4px;
+  padding: 3px 10px;
+  font-size: 0.66rem;
+  font-family: var(--font-mono);
+  color: #a78bfa;
+  margin-bottom: 14px;
+}
+
+.exp-points {
+  list-style: none;
+  padding: 0; margin: 0;
+}
+
+.exp-points li {
+  font-size: 0.85rem;
+  color: rgba(232,244,255,0.75);
+  line-height: 1.65;
+  padding: 5px 0 5px 22px;
+  position: relative;
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+  transition: color 0.2s;
+}
+
+.exp-points li:last-child { border-bottom: none; }
+
+.exp-points li::before {
+  content: '▹';
+  position: absolute; left: 0;
+  color: var(--accent);
+  font-size: 0.75rem;
+  top: 6px;
+}
+
+.exp-points li:hover { color: rgba(232,244,255,0.95); }
+
+.exp-skills-row {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+.exp-skill-tag {
+  background: rgba(0,255,204,0.06);
+  border: 1px solid rgba(0,255,204,0.2);
+  border-radius: 4px;
+  padding: 3px 9px;
+  font-size: 0.65rem;
+  font-family: var(--font-mono);
+  color: var(--accent3);
+  transition: all 0.2s;
+}
+
+.exp-skill-tag:hover {
+  background: rgba(0,255,204,0.14);
+  border-color: var(--accent3);
+  box-shadow: 0 0 8px rgba(0,255,204,0.2);
+}
 
 /* ===== PROJECTS ===== */
 #projects { background: transparent; }
@@ -868,6 +1241,8 @@ footer {
 
 /* ===== MOBILE NAV ===== */
 .hamburger { display: none; background: none; border: none; color: var(--accent); font-size: 1.5rem; cursor: pointer; }
+
+/* ===== EDUCATION RESPONSIVE ===== */
 @media (max-width: 768px) {
   nav { padding: 14px 20px; }
   .nav-links { display: none; position: absolute; top: 100%; left: 0; right: 0; background: rgba(2,5,16,0.95); backdrop-filter: blur(20px); flex-direction: column; padding: 20px; gap: 20px; border-bottom: 1px solid var(--border); }
@@ -880,6 +1255,16 @@ footer {
   .projects-grid { grid-template-columns: 1fr; }
   .contact-links { flex-direction: column; }
   .profile-img, .profile-img-placeholder { width: 200px; height: 200px; }
+
+  /* Education mobile */
+  .edu-timeline::before { left: 20px; }
+  .edu-item { padding-right: 0 !important; padding-left: 50px !important; flex-direction: row !important; }
+  .edu-dot { left: 11px; }
+
+  /* Experience mobile */
+  .exp-line { left: 18px; }
+  .exp-item { padding-left: 52px; }
+  .exp-node { left: 7px; }
 }
 </style>
 </head>
@@ -905,6 +1290,8 @@ footer {
     <li><a href="#hero">Home</a></li>
     <li><a href="#about">About</a></li>
     <li><a href="#skills">Skills</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#experience">Experience</a></li>
     <li><a href="#projects">Projects</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="#" class="nav-cta" onclick="downloadResume(event)"><i class="bi bi-download"></i> Resume</a></li>
@@ -923,13 +1310,12 @@ footer {
         </div>
         <h1 class="hero-name">
           <span class="line1">RAMGOPAL </span>
-          
         </h1>
         <p class="hero-role">
           <span>Data Scientist</span> &nbsp;|&nbsp; <span>AI/ML Engineer</span> &nbsp;|&nbsp; <span>Python Developer</span>
         </p>
         <p class="hero-desc">
-          Building intelligent systems at the intersection of data, machine learning, and real-world impact. 
+          Building intelligent systems at the intersection of data, machine learning, and real-world impact.
           Passionate about transforming raw data into actionable intelligence — from NLP pipelines to computer vision solutions.
         </p>
         <div class="hero-btns">
@@ -946,8 +1332,8 @@ footer {
             <div class="stat-label">Projects</div>
           </div>
           <div class="stat-card">
-            <div class="stat-num">11+</div>
-            <div class="stat-label">Skills</div>
+            <div class="stat-num">2</div>
+            <div class="stat-label">Internships</div>
           </div>
           <div class="stat-card">
             <div class="stat-num">AI</div>
@@ -960,7 +1346,7 @@ footer {
           <div class="profile-ring"></div>
           <div class="profile-ring2"></div>
           <div class="profile-img-placeholder">
-        <img src="MY.jpeg" alt="Profile Image" class="profile-img">
+            <img src="MY.jpeg" alt="Profile Image" class="profile-img">
           </div>
           <div class="profile-status">
             <span class="badge-dot"></span> Open to Work
@@ -981,16 +1367,16 @@ footer {
       <div class="row gy-4">
         <div class="col-lg-8">
           <p class="about-text">
-            I'm <span class="about-highlight">Ramgopal M.</span>, a Data Science & AI/ML practitioner based in 
-            <span class="about-highlight">Tamil Nadu, India</span>, currently Seeking a Job Opportunities <span class="about-highlight">In AI ML Positions</span>. 
+            I'm <span class="about-highlight">Ramgopal M.</span>, a Data Science & AI/ML practitioner based in
+            <span class="about-highlight">Tamil Nadu, India</span>, currently seeking job opportunities <span class="about-highlight">in AI/ML positions</span>.
             I specialize in building end-to-end intelligent systems — from data pipelines to deployed ML models.
           </p>
           <br>
           <p class="about-text">
-            My work spans <span class="about-highlight">Natural Language Processing</span>, <span class="about-highlight">Computer Vision</span>, 
-            <span class="about-highlight">Machine Learinng & Deep Learning</span>, and <span class="about-highlight">Generative AI</span>. 
-            I've built AI-powered applications using Python, TensorFlow, PyTorch, and LangChain — with a strong focus on 
-            practical, real-world problem solving. I thrive at the intersection of data engineering and applied ML research.
+            My work spans <span class="about-highlight">Natural Language Processing</span>, <span class="about-highlight">Computer Vision</span>,
+            <span class="about-highlight">Machine Learning & Deep Learning</span>, and <span class="about-highlight">Generative AI</span>.
+            I've built AI-powered applications using Python, TensorFlow, PyTorch, and LangChain — with a strong focus on
+            practical, real-world problem solving.
           </p>
           <div class="cert-chips">
             <span class="cert-chip">🎓 Data Science</span>
@@ -1026,6 +1412,180 @@ footer {
   </div>
 </section>
 
+<!-- EDUCATION -->
+<section id="education">
+  <div class="container reveal">
+    <div class="section-label">ACADEMIC BACKGROUND</div>
+    <h2 class="section-title">Education</h2>
+    <div class="section-divider"></div>
+
+    <div class="edu-timeline">
+
+      <!-- Item 1 -->
+      <div class="edu-item reveal">
+        <div class="edu-dot"></div>
+        <div class="edu-card">
+          <div class="edu-year-badge">
+            <i class="bi bi-calendar3"></i> 2021 – 2025
+          </div>
+          <div class="edu-degree">B.E. – Computer Science & Engineering</div>
+          <div class="edu-institution">
+            <i class="bi bi-building"></i> M.A.M College of Engineering & Technology, Anna University
+          </div>
+          <div class="edu-grade">
+            <i class="bi bi-award-fill"></i> CGPA: 8.27 &nbsp;·&nbsp; <span style="color:var(--accent)">Graduated 2025</span>
+          </div>
+          <div class="edu-highlights">
+            <span class="edu-tag">Machine Learning</span>
+            <span class="edu-tag">Deep Learning</span>
+            <span class="edu-tag">Data Structures</span>
+            <span class="edu-tag">Python Programming</span>
+            <span class="edu-tag">Statistics</span>
+            <span class="edu-tag">Computer Vision</span>
+            <span class="edu-tag">NLP</span>
+            <span class="edu-tag">Database Systems</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Item 2 -->
+      <div class="edu-item reveal">
+        <div class="edu-dot"></div>
+        <div class="edu-card">
+          <div class="edu-year-badge">
+            <i class="bi bi-calendar3"></i> 2019 – 2021
+          </div>
+          <div class="edu-degree">Higher Secondary School (HSC)</div>
+          <div class="edu-institution">
+            <i class="bi bi-building"></i> Bishop Heber Hr. Sec. School, Trichy
+          </div>
+          <div class="edu-grade">
+            <i class="bi bi-award-fill"></i> Percentage: 79%
+          </div>
+          <div class="edu-highlights">
+            <span class="edu-tag">Mathematics</span>
+            <span class="edu-tag">Physics</span>
+            <span class="edu-tag">Chemistry</span>
+            <span class="edu-tag">Computer Science</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Item 3 -->
+      <div class="edu-item reveal">
+        <div class="edu-dot"></div>
+        <div class="edu-card">
+          <div class="edu-year-badge">
+            <i class="bi bi-calendar3"></i> 2019
+          </div>
+          <div class="edu-degree">Secondary School (SSLC)</div>
+          <div class="edu-institution">
+            <i class="bi bi-building"></i> Bishop Heber Hr. Sec. School, Trichy
+          </div>
+          <div class="edu-grade">
+            <i class="bi bi-award-fill"></i> Percentage: 71%
+          </div>
+          <div class="edu-highlights">
+            <span class="edu-tag">Mathematics</span>
+            <span class="edu-tag">Science</span>
+            <span class="edu-tag">Social Studies</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="container reveal">
+    <div class="section-label">PROFESSIONAL JOURNEY</div>
+    <h2 class="section-title">Experience</h2>
+    <div class="section-divider"></div>
+
+    <div class="exp-container">
+      <div class="exp-line"></div>
+
+      <!-- Experience 1: OrionShift -->
+      <div class="exp-item">
+        <div class="exp-node">
+          <i class="bi bi-cpu-fill exp-node-icon"></i>
+        </div>
+        <div class="exp-card">
+          <div class="exp-card-header">
+            <div>
+              <div class="exp-title">AI Engineer Intern</div>
+              <div class="exp-company">
+                <i class="bi bi-buildings-fill"></i> OrionShift Pvt Ltd
+              </div>
+            </div>
+            <div class="exp-meta">
+              <div class="exp-duration"><i class="bi bi-calendar2-range"></i> &nbsp;Jan 2026 – Mar 2026</div>
+              <div class="exp-location"><i class="bi bi-geo-alt"></i> Tamil Nadu, India</div>
+            </div>
+          </div>
+          <div class="exp-type-badge"><i class="bi bi-briefcase-fill"></i> Internship · AI Engineering</div>
+          <ul class="exp-points">
+            <li>Developed an AI-Powered Banking Exam Preparation System supporting Prelims & Mains practice modules.</li>
+            <li>Created mock tests, sectional tests, and topic-wise practice using Python and Streamlit with JSON-based datasets.</li>
+            <li>Integrated a RAG-based AI Tutor (LLM + prompt engineering) to generate exam-level MCQs and provide step-by-step explanations.</li>
+            <li>Worked with AI, LLMs, prompt engineering, and real-world system development.</li>
+            <li>Gained hands-on experience deploying AI applications in production environments.</li>
+          </ul>
+          <div class="exp-skills-row">
+            <span class="exp-skill-tag">Python</span>
+            <span class="exp-skill-tag">Streamlit</span>
+            <span class="exp-skill-tag">LLMs</span>
+            <span class="exp-skill-tag">RAG</span>
+            <span class="exp-skill-tag">Prompt Engineering</span>
+            <span class="exp-skill-tag">JSON</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Experience 2: Soft Logic Systems -->
+      <div class="exp-item">
+        <div class="exp-node">
+          <i class="bi bi-graph-up-arrow exp-node-icon"></i>
+        </div>
+        <div class="exp-card">
+          <div class="exp-card-header">
+            <div>
+              <div class="exp-title">Data Science Intern</div>
+              <div class="exp-company">
+                <i class="bi bi-buildings-fill"></i> Soft Logic Systems
+              </div>
+            </div>
+            <div class="exp-meta">
+              <div class="exp-duration"><i class="bi bi-calendar2-range"></i> &nbsp;Apr 2025 – Oct 2025</div>
+              <div class="exp-location"><i class="bi bi-geo-alt"></i> Tamil Nadu, India</div>
+            </div>
+          </div>
+          <div class="exp-type-badge"><i class="bi bi-briefcase-fill"></i> Internship · Data Science</div>
+          <ul class="exp-points">
+            <li>Contributed to AI and Machine Learning projects in the Data Science domain.</li>
+            <li>Developed a Currency Classification system using Deep Learning (CNN) models for Indian currency recognition.</li>
+            <li>Created a Healthcare Chatbot using NLP for automated, intelligent user interaction.</li>
+            <li>Applied Python, SQL, and OpenCV for data handling and computer vision tasks.</li>
+            <li>Gained practical exposure to real-world AI/ML project development and deployment pipelines.</li>
+          </ul>
+          <div class="exp-skills-row">
+            <span class="exp-skill-tag">Python</span>
+            <span class="exp-skill-tag">Deep Learning</span>
+            <span class="exp-skill-tag">CNN</span>
+            <span class="exp-skill-tag">NLP</span>
+            <span class="exp-skill-tag">OpenCV</span>
+            <span class="exp-skill-tag">SQL</span>
+            <span class="exp-skill-tag">TensorFlow</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 <!-- PROJECTS -->
 <section id="projects">
   <div class="container reveal">
@@ -1043,7 +1603,7 @@ footer {
     <h2 class="section-title">Get In Touch</h2>
     <div class="section-divider"></div>
     <p style="color:var(--muted);max-width:480px;line-height:1.7;font-size:0.95rem;">
-      Open to collaborations, internships, and exciting ML/AI projects. 
+      Open to collaborations, internships, and exciting ML/AI projects.
       Let's build something intelligent together.
     </p>
     <div class="contact-links">
@@ -1061,11 +1621,11 @@ footer {
           <div class="contact-val">LinkedIn Profile</div>
         </div>
       </a>
-      <a href="mailto:ramgopal@email.com" class="contact-card">
+      <a href="mailto:ramgopal.mohan0910@gmail.com" class="contact-card">
         <i class="bi bi-envelope-fill contact-icon" style="color:var(--accent3)"></i>
         <div>
           <div class="contact-label">EMAIL</div>
-          <div class="contact-val">ramgopal.mohan09@email.com</div>
+          <div class="contact-val">ramgopal.mohan0910@gmail.com</div>
         </div>
       </a>
     </div>
@@ -1074,7 +1634,7 @@ footer {
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-text">© 2026 <span>Ramgopal M.</span> — Crafted with  & Python</div>
+  <div class="footer-text">© 2026 <span>Ramgopal M.</span> — Crafted with ❤️ & Python</div>
   <div class="footer-text">Data Scientist · AI/ML Engineer · <span>Tamil Nadu, India</span></div>
 </footer>
 
@@ -1135,9 +1695,7 @@ footer {
 <script>
 // ===== LOADER =====
 window.addEventListener('load', () => {
-  setTimeout(() => {
-    document.getElementById('loader').classList.add('hidden');
-  }, 1600);
+  setTimeout(() => { document.getElementById('loader').classList.add('hidden'); }, 1600);
 });
 
 // ===== CURSOR =====
@@ -1152,7 +1710,7 @@ function animCursor() {
   requestAnimationFrame(animCursor);
 }
 animCursor();
-document.querySelectorAll('a,button,.project-card,.skill-card,.contact-card').forEach(el => {
+document.querySelectorAll('a,button,.project-card,.skill-card,.contact-card,.edu-card,.exp-card').forEach(el => {
   el.addEventListener('mouseenter', () => ring.classList.add('hover'));
   el.addEventListener('mouseleave', () => ring.classList.remove('hover'));
 });
@@ -1167,41 +1725,28 @@ const canvas = document.getElementById('neural-canvas');
 const ctx = canvas.getContext('2d');
 let W, H, nodes = [], frame = 0;
 const NUM = 70, MAX_DIST = 160;
-
-function resize() {
-  W = canvas.width = window.innerWidth;
-  H = canvas.height = window.innerHeight;
-}
+function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
 resize();
-window.addEventListener('resize', () => { resize(); });
-
+window.addEventListener('resize', resize);
 class Node {
   constructor() { this.reset(); }
   reset() {
     this.x = Math.random()*W; this.y = Math.random()*H;
     this.vx = (Math.random()-0.5)*0.4; this.vy = (Math.random()-0.5)*0.4;
-    this.r = Math.random()*2.5+1;
-    this.pulse = Math.random()*Math.PI*2;
+    this.r = Math.random()*2.5+1; this.pulse = Math.random()*Math.PI*2;
   }
   update() {
-    this.x += this.vx; this.y += this.vy;
-    this.pulse += 0.03;
+    this.x += this.vx; this.y += this.vy; this.pulse += 0.03;
     if(this.x<-20||this.x>W+20||this.y<-20||this.y>H+20) this.reset();
   }
   draw() {
     const alpha = 0.4 + Math.sin(this.pulse)*0.2;
-    ctx.beginPath();
-    ctx.arc(this.x,this.y,this.r,0,Math.PI*2);
+    ctx.beginPath(); ctx.arc(this.x,this.y,this.r,0,Math.PI*2);
     ctx.fillStyle = `rgba(0,180,255,${alpha})`;
-    ctx.shadowColor = '#00b4ff';
-    ctx.shadowBlur = 8;
-    ctx.fill();
-    ctx.shadowBlur = 0;
+    ctx.shadowColor = '#00b4ff'; ctx.shadowBlur = 8; ctx.fill(); ctx.shadowBlur = 0;
   }
 }
-
 for(let i=0;i<NUM;i++) nodes.push(new Node());
-
 function drawNet() {
   ctx.clearRect(0,0,W,H);
   for(let i=0;i<NUM;i++) {
@@ -1210,38 +1755,97 @@ function drawNet() {
       const dx=nodes[i].x-nodes[j].x, dy=nodes[i].y-nodes[j].y;
       const dist=Math.sqrt(dx*dx+dy*dy);
       if(dist<MAX_DIST) {
-        const alpha = (1-dist/MAX_DIST)*0.25;
-        const grad = ctx.createLinearGradient(nodes[i].x,nodes[i].y,nodes[j].x,nodes[j].y);
+        const alpha=(1-dist/MAX_DIST)*0.25;
+        const grad=ctx.createLinearGradient(nodes[i].x,nodes[i].y,nodes[j].x,nodes[j].y);
         grad.addColorStop(0,`rgba(0,180,255,${alpha})`);
         grad.addColorStop(1,`rgba(124,58,255,${alpha})`);
-        ctx.beginPath();
-        ctx.moveTo(nodes[i].x,nodes[i].y);
-        ctx.lineTo(nodes[j].x,nodes[j].y);
-        ctx.strokeStyle = grad;
-        ctx.lineWidth = 0.8;
-        ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(nodes[i].x,nodes[i].y); ctx.lineTo(nodes[j].x,nodes[j].y);
+        ctx.strokeStyle=grad; ctx.lineWidth=0.8; ctx.stroke();
       }
     }
     nodes[i].draw();
   }
-  frame++;
-  requestAnimationFrame(drawNet);
+  frame++; requestAnimationFrame(drawNet);
 }
 drawNet();
 
-// ===== SKILLS DATA =====
+// ===== SKILLS DATA — SVG-based professional icons =====
 const skills = [
-  { name: 'Python', icon: '🐍', level: 92 },
-  { name: 'SQL', icon: '🗄️', level: 80 },
-  { name: 'Artificial Intelligence', icon: '֎🇦🇮 ', level: 85 },
-  { name: 'Machine Learning', icon: '⚙️', level: 88 },
-  { name: 'Deep Learning', icon: '🧠', level: 82 },
-  { name: 'NLP', icon: '💬', level: 78 },
-  { name: 'OpenCV', icon: '👁️', level: 75 },
-  { name: 'VS Code', icon: '💻', level: 90 },
-  { name: 'Git', icon: '🔀', level: 85 },
-  { name: 'GitHub', icon: '🐙', level: 85 },
-  { name: 'Jupyter', icon: '📓', level: 92 },
+  {
+    name: 'Python',
+    level: 92,
+    svg: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C8.5 2 8 3.5 8 5v2h4v1H5.5C4 8 2 9 2 12s2 14 3.5 14H7v-2.5c0-1.5 1.2-3 2.5-3H14c1 0 2-.8 2-2V6c0-1.2-1-4-4-4zm-1.5 1.8c.7 0 1.2.5 1.2 1.2S11.2 6.2 10.5 6.2 9.3 5.7 9.3 5S9.8 3.8 10.5 3.8z" fill="#3776AB"/><path d="M12 22c3.5 0 4-1.5 4-3v-2h-4v-1h6.5c1.5 0 3.5-1 3.5-4s-2-10-3.5-10H17v2.5c0 1.5-1.2 3-2.5 3H10c-1 0-2 .8-2 2v6c0 1.2 1 4 4 4zm1.5-1.8c-.7 0-1.2-.5-1.2-1.2s.5-1.2 1.2-1.2 1.2.5 1.2 1.2-.5 1.2-1.2 1.2z" fill="#FFD43B"/></svg>`
+  },
+  {
+    name: 'SQL',
+    level: 80,
+    svg: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><ellipse cx="12" cy="6" rx="9" ry="3.5" fill="#00b4ff" opacity="0.8"/><path d="M3 6v4c0 1.93 4.03 3.5 9 3.5S21 11.93 21 10V6" stroke="#00b4ff" stroke-width="1.5" fill="none"/><path d="M3 10v4c0 1.93 4.03 3.5 9 3.5S21 15.93 21 14v-4" stroke="#7c3aff" stroke-width="1.5" fill="none"/><path d="M3 14v4c0 1.93 4.03 3.5 9 3.5S21 19.93 21 18v-4" stroke="#00ffcc" stroke-width="1.5" fill="none"/></svg>`
+  },
+  {
+    name: 'Machine Learning',
+    level: 88,
+    svg: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="2.5" fill="#00b4ff"/><circle cx="5" cy="7" r="1.8" fill="#7c3aff"/><circle cx="19" cy="7" r="1.8" fill="#7c3aff"/><circle cx="5" cy="17" r="1.8" fill="#7c3aff"/><circle cx="19" cy="17" r="1.8" fill="#7c3aff"/><circle cx="12" cy="3" r="1.8" fill="#00ffcc"/><circle cx="12" cy="21" r="1.8" fill="#00ffcc"/><line x1="12" y1="9.5" x2="5" y2="7" stroke="#00b4ff" stroke-width="1.2" opacity="0.7"/><line x1="12" y1="9.5" x2="19" y2="7" stroke="#00b4ff" stroke-width="1.2" opacity="0.7"/><line x1="12" y1="14.5" x2="5" y2="17" stroke="#00b4ff" stroke-width="1.2" opacity="0.7"/><line x1="12" y1="14.5" x2="19" y2="17" stroke="#00b4ff" stroke-width="1.2" opacity="0.7"/><line x1="12" y1="9.5" x2="12" y2="3" stroke="#00ffcc" stroke-width="1.2" opacity="0.7"/><line x1="12" y1="14.5" x2="12" y2="21" stroke="#00ffcc" stroke-width="1.2" opacity="0.7"/></svg>`
+  },
+  {
+    name: 'Deep Learning',
+    level: 82,
+    svg: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="3.5" cy="8" r="1.5" fill="#7c3aff"/><circle cx="3.5" cy="12" r="1.5" fill="#7c3aff"/><circle cx="3.5" cy="16" r="1.5" fill="#7c3aff"/><circle cx="9" cy="6" r="1.5" fill="#00b4ff"/><circle cx="9" cy="10" r="1.5" fill="#00b4ff"/><circle cx="9" cy="14" r="1.5" fill="#00b4ff"/><circle cx="9" cy="18" r="1.5" fill="#00b4ff"/><circle cx="15" cy="8" r="1.5" fill="#00b4ff"/><circle cx="15" cy="12" r="1.5" fill="#00b4ff"/><circle cx="15" cy="16" r="1.5" fill="#00b4ff"/><circle cx="20.5" cy="12" r="1.5" fill="#00ffcc"/><line x1="5" y1="8" x2="7.5" y2="6" stroke="#7c3aff" stroke-width="0.8" opacity="0.5"/><line x1="5" y1="8" x2="7.5" y2="10" stroke="#7c3aff" stroke-width="0.8" opacity="0.5"/><line x1="5" y1="12" x2="7.5" y2="10" stroke="#7c3aff" stroke-width="0.8" opacity="0.5"/><line x1="5" y1="12" x2="7.5" y2="14" stroke="#7c3aff" stroke-width="0.8" opacity="0.5"/><line x1="5" y1="16" x2="7.5" y2="14" stroke="#7c3aff" stroke-width="0.8" opacity="0.5"/><line x1="5" y1="16" x2="7.5" y2="18" stroke="#7c3aff" stroke-width="0.8" opacity="0.5"/><line x1="10.5" y1="6" x2="13.5" y2="8" stroke="#00b4ff" stroke-width="0.8" opacity="0.5"/><line x1="10.5" y1="10" x2="13.5" y2="8" stroke="#00b4ff" stroke-width="0.8" opacity="0.5"/><line x1="10.5" y1="10" x2="13.5" y2="12" stroke="#00b4ff" stroke-width="0.8" opacity="0.5"/><line x1="10.5" y1="14" x2="13.5" y2="12" stroke="#00b4ff" stroke-width="0.8" opacity="0.5"/><line x1="10.5" y1="14" x2="13.5" y2="16" stroke="#00b4ff" stroke-width="0.8" opacity="0.5"/><line x1="16.5" y1="8" x2="19" y2="12" stroke="#00ffcc" stroke-width="0.8" opacity="0.5"/><line x1="16.5" y1="12" x2="19" y2="12" stroke="#00ffcc" stroke-width="0.8" opacity="0.5"/><line x1="16.5" y1="16" x2="19" y2="12" stroke="#00ffcc" stroke-width="0.8" opacity="0.5"/></svg>`
+  },
+  {
+    name: 'NLP',
+    level: 78,
+    svg: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="4" width="20" height="14" rx="3" stroke="#00b4ff" stroke-width="1.5" fill="none"/><path d="M6 9h12M6 12h8M6 15h5" stroke="#00b4ff" stroke-width="1.5" stroke-linecap="round"/><circle cx="19" cy="19" r="2.5" fill="#7c3aff"/><path d="M17 19l-2 2" stroke="#7c3aff" stroke-width="1.5" stroke-linecap="round"/></svg>`
+  },
+  {
+    name: 'Computer Vision',
+    level: 75,
+    svg: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="#00b4ff" stroke-width="1.5" fill="none"/><circle cx="12" cy="12" r="3.5" stroke="#00ffcc" stroke-width="1.5" fill="none"/><circle cx="12" cy="12" r="1.2" fill="#00ffcc"/><path d="M4 4l3 3M20 4l-3 3M4 20l3-3M20 20l-3-3" stroke="#7c3aff" stroke-width="1.2" stroke-linecap="round" opacity="0.6"/></svg>`
+  },
+  {
+    name: 'TensorFlow',
+    level: 80,
+    svg: `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M1.5 6l10.5-6 10.5 6v5.5l-5.3-3v8.8l-5.2 3V12L6.8 15V8.9L1.5 11.5V6z" fill="#FF6F00"/><path d="M12 0v20.3l5.2-3V8.5l5.3 3V6L12 0z" fill="#FFA000" opacity="0.85"/></svg>`
+  },
+  {
+    name: 'PyTorch',
+    level: 75,
+    svg: `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12.005 0L4.952 7.053a9.865 9.865 0 000 13.99 9.865 9.865 0 0013.99 0 9.865 9.865 0 000-13.99L16.634 4.35l-.001 3.624a5.924 5.924 0 011.747 4.224 5.933 5.933 0 01-5.933 5.933 5.933 5.933 0 01-5.933-5.933 5.933 5.933 0 015.933-5.933L12.005 0z" fill="#EE4C2C"/><circle cx="16.088" cy="4.177" r="1.315" fill="#EE4C2C"/></svg>`
+  },
+  {
+    name: 'LangChain',
+    level: 78,
+    svg: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 12l-4 4m0 0l4 4M5 16h14M15 12l4-4m0 0l-4-4M19 8H5" stroke="#00b4ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="5" cy="16" r="2" fill="#7c3aff"/><circle cx="19" cy="8" r="2" fill="#00ffcc"/></svg>`
+  },
+  {
+    name: 'Git',
+    level: 85,
+    svg: `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23.546 10.93L13.067.452a1.55 1.55 0 00-2.188 0L8.708 2.627l2.76 2.76a1.838 1.838 0 012.327 2.341l2.658 2.66a1.838 1.838 0 11-1.104 1.045L12.984 8.97v6.1a1.84 1.84 0 11-1.512-.021V8.971a1.84 1.84 0 01-1.002-2.413L7.734 3.799 .45 11.082a1.55 1.55 0 000 2.189l10.48 10.477a1.55 1.55 0 002.187 0l10.43-10.43a1.55 1.55 0 000-2.389" fill="#F05032"/></svg>`
+  },
+  {
+    name: 'Jupyter',
+    level: 92,
+    svg: `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7.157 22.201A1.784 1.784 0 015.374 24c-.98 0-1.784-.804-1.784-1.799a1.784 1.784 0 013.567 0zM.975 15.307c0-.346.08-.69.235-.987a2.04 2.04 0 012.753-.83c.972.5 1.37 1.682.88 2.654a2.04 2.04 0 01-2.754.831A2.034 2.034 0 01.975 15.307zM22.04 6.535a1.433 1.433 0 01-1.432 1.433 1.432 1.432 0 01-1.432-1.433 1.432 1.432 0 012.864 0z" fill="#F37726"/><path d="M12 3.1C6.91 3.1 2.89 5.24 2.89 7.91c0 1.47 1.06 2.79 2.79 3.77-1.5.85-2.42 2.02-2.42 3.32 0 2.67 4.02 4.82 9.11 4.82 5.09 0 9.11-2.15 9.11-4.82 0-1.3-.92-2.47-2.42-3.32 1.73-.98 2.79-2.3 2.79-3.77 0-2.67-4.02-4.81-9.11-4.81z" fill="#F37726" opacity="0.3"/><path d="M12 5.3c-4.3 0-7.8 1.75-7.8 3.91S7.7 13.12 12 13.12s7.8-1.75 7.8-3.91S16.3 5.3 12 5.3z" fill="#F37726" opacity="0.5"/></svg>`
+  },
+  {
+    name: 'Scikit-learn',
+    level: 84,
+    svg: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" stroke="#F7931E" stroke-width="1.5" fill="none"/><path d="M8 12c0-2.21 1.79-4 4-4s4 1.79 4 4-1.79 4-4 4" stroke="#F7931E" stroke-width="1.5" stroke-linecap="round"/><path d="M5 9l2 1M5 15l2-1M19 9l-2 1M19 15l-2-1" stroke="#29ABE2" stroke-width="1.5" stroke-linecap="round"/><circle cx="12" cy="12" r="2" fill="#F7931E"/></svg>`
+  },
+  {
+    name: 'OpenCV',
+    level: 75,
+    svg: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="8" cy="8" r="4" fill="#3DDC84" opacity="0.85"/><circle cx="16" cy="8" r="4" fill="#E53935" opacity="0.85"/><circle cx="12" cy="15.5" r="4" fill="#1E88E5" opacity="0.85"/><circle cx="12" cy="10.5" r="1.5" fill="white" opacity="0.5"/></svg>`
+  },
+  {
+    name: 'VS Code',
+    level: 90,
+    svg: `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23.15 2.587L18.21.21a1.494 1.494 0 00-1.705.29l-9.46 8.63-4.12-3.128a.999.999 0 00-1.276.057L.327 7.261A1 1 0 00.326 8.74L3.899 12 .326 15.26a1 1 0 00.001 1.479L1.65 17.94a.999.999 0 001.276.057l4.12-3.128 9.46 8.63a1.492 1.492 0 001.704.29l4.942-2.377A1.5 1.5 0 0024 19.88V4.12a1.5 1.5 0 00-.85-1.533zm-5.146 14.861L10.826 12l7.178-5.448v10.896z" fill="#007ACC"/></svg>`
+  },
+  {
+    name: 'GitHub',
+    level: 85,
+    svg: `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" fill="#e8f4ff"/></svg>`
+  },
 ];
 
 const grid = document.getElementById('skillsGrid');
@@ -1249,7 +1853,7 @@ skills.forEach(s => {
   const el = document.createElement('div');
   el.className = 'skill-card reveal';
   el.innerHTML = `
-    <span class="skill-icon">${s.icon}</span>
+    <div class="skill-icon">${s.svg}</div>
     <div class="skill-name">${s.name}</div>
     <div class="skill-bar-wrap"><div class="skill-bar" data-level="${s.level}"></div></div>
   `;
@@ -1264,7 +1868,6 @@ const projects = [
     desc: 'An AI-powered banking exam preparation platform with topic-wise practice, mock tests, performance analytics, and an AI study planner. Features a custom weak-topic trainer and adaptive difficulty engine.',
     github: 'https://github.com/Ram092003/Banikng--Assitance.git'
   },
-
   {
     title: 'AI Healthcare Assistant Chatbot',
     tags: ['Python','RAG','LANGCHAIN','AI','Streamlit'],
@@ -1340,14 +1943,10 @@ document.getElementById('projectModal').addEventListener('click', e => {
 // ===== DOWNLOAD RESUME =====
 function downloadResume(e) {
   e.preventDefault();
-
   const link = document.createElement('a');
-  link.href = 'Ramgopal_Resume.pdf';   // your file path
-  link.download = 'Ramgopal_Resume.pdf'; // file name while downloading
-
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
+  link.href = 'Ramgopal_Resume.pdf';
+  link.download = 'Ramgopal_Resume.pdf';
+  document.body.appendChild(link); link.click(); document.body.removeChild(link);
 }
 
 // ===== SCROLL REVEAL =====
@@ -1355,7 +1954,6 @@ const observer = new IntersectionObserver((entries) => {
   entries.forEach(e => {
     if(e.isIntersecting) {
       e.target.classList.add('visible');
-      // Animate skill bars
       e.target.querySelectorAll('.skill-bar').forEach(bar => {
         bar.style.width = bar.dataset.level + '%';
       });
@@ -1365,11 +1963,18 @@ const observer = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
+// ===== EXPERIENCE ITEMS — animated on scroll =====
+const expObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting) e.target.classList.add('visible');
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.exp-item').forEach(el => expObserver.observe(el));
+
 // ===== PARALLAX =====
 window.addEventListener('scroll', () => {
   const y = window.scrollY;
-  const canvas = document.getElementById('neural-canvas');
-  canvas.style.transform = `translateY(${y * 0.1}px)`;
+  document.getElementById('neural-canvas').style.transform = `translateY(${y * 0.1}px)`;
 });
 
 // ===== MULTI-LANGUAGE LOADER =====
@@ -1387,7 +1992,6 @@ window.addEventListener('scroll', () => {
     { text: '람고팔', label: 'Korean' },
     { text: 'RAMGOPAL', label: 'English' }
   ];
-
   const loader = document.getElementById('lang-loader');
   const display = document.getElementById('lang-display');
   const progress = document.getElementById('lang-progress');
@@ -1395,10 +1999,7 @@ window.addEventListener('scroll', () => {
 
   function runLangLoader() {
     loader.classList.add('active');
-    let i = 0;
-    const total = langSequence.length;
-    const intervalMs = 120;
-
+    let i = 0; const total = langSequence.length; const intervalMs = 120;
     const interval = setInterval(() => {
       display.classList.add('flash');
       setTimeout(() => {
@@ -1420,14 +2021,13 @@ window.addEventListener('scroll', () => {
 
   if (navLogo) {
     navLogo.addEventListener('click', function(e) {
-      e.preventDefault();
-      runLangLoader();
+      e.preventDefault(); runLangLoader();
       setTimeout(() => { window.scrollTo({ top: 0, behavior: 'smooth' }); }, 200);
     });
   }
 })();
 
-// ===== AI CHATBOT — PRECISION INTENT ENGINE =====
+// ===== AI CHATBOT =====
 (function() {
   const toggleBtn  = document.getElementById('chatbot-toggle');
   const chatWindow = document.getElementById('chatbot-window');
@@ -1436,539 +2036,170 @@ window.addEventListener('scroll', () => {
   const inputEl    = document.getElementById('chat-input');
   const sendBtn    = document.getElementById('chat-send');
 
-  // ─── PORTFOLIO DATA ────────────────────────────────────────────────────────
   const DATA = {
     personal: {
       name: 'Ramgopal M.',
       role: 'Data Scientist & AI/ML Engineer & Python Developer',
       location: 'Tamil Nadu, India',
-      email: 'ramgopal.mohan09@email.com',
+      email: 'ramgopal.mohan0910@gmail.com',
       github: 'https://github.com/Ram092003',
       linkedin: 'https://www.linkedin.com/in/ramgopal-m',
       status: 'Open to Work — Actively seeking AI/ML & Data Science roles',
       summary: 'End-to-end AI/ML practitioner specializing in intelligent system design — from raw data pipelines to deployed production models. Passionate about real-world impact through NLP, Computer Vision, and Generative AI.'
     },
     education: [
-      {
-        degree: 'B.Sc. in Data Science',
-        institution: 'Tamil Nadu, India',
-        year: '2021 – 2024',
-        grade: 'Completed',
-        highlights: ['Machine Learning', 'Deep Learning', 'Statistics', 'Python Programming', 'Data Visualization']
-      },
-      {
-        degree: 'AI/ML Self-Learning & Projects',
-        institution: 'Online Platforms (Coursera, Kaggle, YouTube)',
-        year: '2022 – Present',
-        grade: 'Ongoing',
-        highlights: ['LangChain & RAG Systems', 'TensorFlow & PyTorch', 'NLP & Transformers', 'Generative AI', 'Computer Vision']
-      }
+      { degree: 'B.E – Computer Science & Engineering', institution: 'M.A.M College of Engineering & Technology, Anna University', year: '2021 – 2025', grade: 'CGPA: 8.27', highlights: ['Machine Learning','Deep Learning','Statistics','Python','Data Visualization'] },
+      { degree: 'Higher Secondary (HSC)', institution: 'Bishop Heber Hr. Sec. School, Trichy', year: '2021', grade: '79%', highlights: ['Mathematics','Physics','Chemistry','Computer Science'] },
+      { degree: 'Secondary School (SSLC)', institution: 'Bishop Heber Hr. Sec. School, Trichy', year: '2019', grade: '71%', highlights: ['Mathematics','Science','Social Studies'] }
     ],
     experience: [
-      {
-        title: 'AI/ML Project Developer',
-        type: 'Freelance / Self-directed',
-        duration: '2022 – Present',
-        location: 'Tamil Nadu, India',
-        points: [
-          'Built 7+ end-to-end AI/ML applications across NLP, CV, and predictive analytics',
-          'Developed RAG-based chatbots using LangChain, MongoDB, and Streamlit',
-          'Implemented LSTM, CNN, and Scikit-learn models for real-world classification & prediction tasks',
-          'Worked with data pipelines, model training, evaluation, and deployment'
-        ]
-      },
-      {
-        title: 'Open Source Contributor',
-        type: 'GitHub Projects',
-        duration: '2022 – Present',
-        location: 'Remote',
-        points: [
-          'Maintained 7+ public repositories covering ML, NLP, and Deep Learning',
-          'Documented code with clear READMEs and reproducible instructions',
-          'Actively exploring new AI tools, frameworks, and research papers'
-        ]
-      }
+      { title: 'AI Engineer Intern', company: 'OrionShift Pvt Ltd', duration: 'Jan 2026 – Mar 2026', type: 'AI Engineering', points: ['Developed AI-Powered Banking Exam Preparation System','RAG-based AI Tutor with LLM + prompt engineering','Mock tests, sectional tests, topic-wise practice modules','Hands-on experience in real-world AI system development'] },
+      { title: 'Data Science Intern', company: 'Soft Logic Systems', duration: 'Apr 2025 – Oct 2025', type: 'Data Science', points: ['Contributed to AI/ML projects in Data Science domain','Developed Currency Classification system using Deep Learning','Created Healthcare Chatbot using NLP','Applied Python, SQL, OpenCV for data handling & CV tasks'] }
     ],
     skills: {
       core: [
-        { name: 'Python',                 level: 92, icon: '🐍' },
-        { name: 'Machine Learning',       level: 88, icon: '⚙️' },
-        { name: 'Artificial Intelligence',level: 85, icon: '🤖' },
-        { name: 'Deep Learning',          level: 82, icon: '🧠' },
-        { name: 'SQL',                    level: 80, icon: '🗄️' },
-        { name: 'NLP',                    level: 78, icon: '💬' },
-        { name: 'OpenCV',                 level: 75, icon: '👁️' }
+        { name: 'Python', level: 92 },{ name: 'Machine Learning', level: 88 },
+        { name: 'Deep Learning', level: 82 },{ name: 'TensorFlow', level: 80 },
+        { name: 'SQL', level: 80 },{ name: 'NLP', level: 78 },{ name: 'Computer Vision', level: 75 }
       ],
       tools: ['VS Code (90%)', 'Git (85%)', 'GitHub (85%)', 'Jupyter (92%)'],
-      frameworks: ['TensorFlow', 'PyTorch', 'LangChain', 'Streamlit', 'Scikit-learn', 'Pandas', 'NumPy', 'OpenCV', 'FastAPI'],
-      domains: ['NLP', 'Computer Vision', 'Generative AI', 'RAG Pipelines', 'Time-Series Forecasting', 'Data Analytics', 'HR Analytics']
+      frameworks: ['TensorFlow','PyTorch','LangChain','Streamlit','Scikit-learn','Pandas','NumPy','OpenCV']
     },
     projects: [
-      {
-        id: 'banking',
-        title: 'Banking Exam AI Prep App',
-        emoji: '🏦',
-        tags: ['Python', 'Streamlit', 'MongoDB', 'AI', 'RAG'],
-        desc: 'AI-powered banking exam preparation platform with topic-wise practice, mock tests, performance analytics, and an AI study planner. Features a custom weak-topic trainer and adaptive difficulty engine.',
-        github: 'https://github.com/Ram092003/Banikng--Assitance.git',
-        highlight: 'Adaptive AI difficulty engine'
-      },
-      {
-        id: 'healthcare',
-        title: 'AI Healthcare Assistant Chatbot',
-        emoji: '🏥',
-        tags: ['Python', 'RAG', 'LangChain', 'AI', 'Streamlit'],
-        desc: 'Intelligent healthcare chatbot providing medical guidance, medication suggestions for common conditions, precautionary advice, and health recommendations using RAG architecture.',
-        github: 'https://github.com/Ram092003/HealthCare_Chatbot.git',
-        highlight: 'RAG-based medical Q&A'
-      },
-      {
-        id: 'python-chatbot',
-        title: 'Python Learning Chatbot',
-        emoji: '🐍',
-        tags: ['Python', 'NLP', 'AI', 'RAG'],
-        desc: 'Interactive chatbot for beginner Python learners — offers conversational explanations, code examples, and guided topic progression through RAG-powered responses.',
-        github: 'https://github.com/Ram092003/Python-RAG-Chatbot.git',
-        highlight: 'Guided conversational learning'
-      },
-      {
-        id: 'sentiment',
-        title: 'LSTM Sentiment Analysis',
-        emoji: '🎬',
-        tags: ['LSTM', 'Deep Learning', 'NLP', 'Python'],
-        desc: 'Deep learning model using LSTM architecture to classify movie reviews as positive, negative, or neutral. Trained on IMDB dataset with high classification accuracy.',
-        github: 'https://github.com/Ram092003/LSTM-Sentiment-Analysis.git',
-        highlight: 'LSTM on IMDB dataset'
-      },
-      {
-        id: 'currency',
-        title: 'Currency Classification System',
-        emoji: '💰',
-        tags: ['Deep Learning', 'CNN', 'Python'],
-        desc: 'CNN-based deep learning model that classifies Indian currency notes (₹10–₹500) including old and new variants using image recognition — real-world computer vision application.',
-        github: 'https://github.com/Ram092003/currency_classifier.git',
-        highlight: 'CNN image recognition'
-      },
-      {
-        id: 'stock',
-        title: 'Stock Market Prediction',
-        emoji: '📈',
-        tags: ['Machine Learning', 'Time Series', 'Python', 'Pandas'],
-        desc: 'ML model analyzing historical stock data to forecast future price trends using time-series techniques including ARIMA and regression-based approaches.',
-        github: 'https://github.com/Ram092003/Stock_Market_Prediction.git',
-        highlight: 'Time-series forecasting'
-      },
-      {
-        id: 'attrition',
-        title: 'Employee Attrition Prediction',
-        emoji: '📊',
-        tags: ['Machine Learning', 'HR Analytics', 'Python', 'Scikit-learn'],
-        desc: 'Predictive ML model identifying employees at risk of leaving the organization using HR data, feature engineering, and classification algorithms.',
-        github: 'https://github.com/Ram092003/Employee-attrition-prediction.git',
-        highlight: 'HR data + classification'
-      }
+      { id:'banking', title:'Banking Exam AI Prep App', emoji:'🏦', tags:['Python','Streamlit','MongoDB','AI','RAG'], desc:'AI-powered banking exam preparation platform with topic-wise practice, mock tests, performance analytics, and an AI study planner.', github:'https://github.com/Ram092003/Banikng--Assitance.git', highlight:'Adaptive AI difficulty engine' },
+      { id:'healthcare', title:'AI Healthcare Assistant Chatbot', emoji:'🏥', tags:['Python','RAG','LangChain','AI','Streamlit'], desc:'Intelligent healthcare chatbot providing medical guidance using RAG architecture.', github:'https://github.com/Ram092003/HealthCare_Chatbot.git', highlight:'RAG-based medical Q&A' },
+      { id:'python-chatbot', title:'Python Learning Chatbot', emoji:'🐍', tags:['Python','NLP','AI','RAG'], desc:'Interactive chatbot for beginner Python learners through RAG-powered responses.', github:'https://github.com/Ram092003/Python-RAG-Chatbot.git', highlight:'Guided conversational learning' },
+      { id:'sentiment', title:'LSTM Sentiment Analysis', emoji:'🎬', tags:['LSTM','Deep Learning','NLP','Python'], desc:'Deep learning model using LSTM to classify movie reviews. Trained on IMDB dataset.', github:'https://github.com/Ram092003/LSTM-Sentiment-Analysis.git', highlight:'LSTM on IMDB dataset' },
+      { id:'currency', title:'Currency Classification System', emoji:'💰', tags:['Deep Learning','CNN','Python'], desc:'CNN-based model classifying Indian currency notes including old and new variants.', github:'https://github.com/Ram092003/currency_classifier.git', highlight:'CNN image recognition' },
+      { id:'stock', title:'Stock Market Prediction', emoji:'📈', tags:['Machine Learning','Time Series','Python','Pandas'], desc:'ML model analyzing historical stock data to forecast future price trends.', github:'https://github.com/Ram092003/Stock_Market_Prediction.git', highlight:'Time-series forecasting' },
+      { id:'attrition', title:'Employee Attrition Prediction', emoji:'📊', tags:['Machine Learning','HR Analytics','Python','Scikit-learn'], desc:'Predictive ML model identifying employees at risk of leaving using HR data.', github:'https://github.com/Ram092003/Employee-attrition-prediction.git', highlight:'HR data + classification' }
     ],
-    contact: {
-      email: 'ramgopal.mohan09@email.com',
-      github: 'https://github.com/Ram092003',
-      linkedin: 'https://www.linkedin.com/in/ramgopal-m',
-      location: 'Tamil Nadu, India'
-    }
+    contact: { email: 'ramgopal.mohan0910@gmail.com', github: 'https://github.com/Ram092003', linkedin: 'https://www.linkedin.com/in/ramgopal-m', location: 'Tamil Nadu, India' }
   };
 
-  // ─── HTML CARD RENDERERS ───────────────────────────────────────────────────
-  const S = `style="`;  // shorthand
-
   function skillsCard() {
-    const bars = DATA.skills.core.map(s => `
-      <div style="margin-bottom:10px;">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
-          <span style="font-size:0.78rem;color:#e8f4ff;">${s.icon} ${s.name}</span>
-          <span style="font-size:0.7rem;color:#00b4ff;font-family:monospace;">${s.level}%</span>
-        </div>
-        <div style="height:4px;background:rgba(255,255,255,0.07);border-radius:4px;overflow:hidden;">
-          <div style="width:${s.level}%;height:100%;background:linear-gradient(90deg,#00b4ff,#7c3aff);border-radius:4px;box-shadow:0 0 6px rgba(0,180,255,0.4);"></div>
-        </div>
-      </div>`).join('');
-
-    const tools = DATA.skills.tools.map(t =>
-      `<span style="background:rgba(0,180,255,0.08);border:1px solid rgba(0,180,255,0.2);border-radius:100px;padding:3px 10px;font-size:0.68rem;color:#00b4ff;font-family:monospace;">${t}</span>`
-    ).join('');
-
-    const fw = DATA.skills.frameworks.map(f =>
-      `<span style="background:rgba(124,58,255,0.08);border:1px solid rgba(124,58,255,0.2);border-radius:4px;padding:2px 8px;font-size:0.68rem;color:#a78bfa;font-family:monospace;">${f}</span>`
-    ).join('');
-
-    return `
-      <div style="font-size:0.82rem;font-weight:700;color:#00b4ff;letter-spacing:0.08em;margin-bottom:12px;">🛠️ SKILLS &amp; TECH STACK</div>
-      <div style="margin-bottom:14px;">${bars}</div>
-      <div style="font-size:0.7rem;color:#6b8aaa;font-family:monospace;margin-bottom:6px;">TOOLS</div>
-      <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px;">${tools}</div>
-      <div style="font-size:0.7rem;color:#6b8aaa;font-family:monospace;margin-bottom:6px;">FRAMEWORKS &amp; LIBRARIES</div>
-      <div style="display:flex;flex-wrap:wrap;gap:5px;">${fw}</div>`;
+    const bars = DATA.skills.core.map(s => `<div style="margin-bottom:10px;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;"><span style="font-size:0.78rem;color:#e8f4ff;">${s.name}</span><span style="font-size:0.7rem;color:#00b4ff;font-family:monospace;">${s.level}%</span></div><div style="height:4px;background:rgba(255,255,255,0.07);border-radius:4px;overflow:hidden;"><div style="width:${s.level}%;height:100%;background:linear-gradient(90deg,#00b4ff,#7c3aff);border-radius:4px;"></div></div></div>`).join('');
+    const fw = DATA.skills.frameworks.map(f => `<span style="background:rgba(124,58,255,0.08);border:1px solid rgba(124,58,255,0.2);border-radius:4px;padding:2px 8px;font-size:0.68rem;color:#a78bfa;font-family:monospace;">${f}</span>`).join('');
+    return `<div style="font-size:0.82rem;font-weight:700;color:#00b4ff;margin-bottom:12px;">🛠️ SKILLS & TECH STACK</div><div style="margin-bottom:14px;">${bars}</div><div style="font-size:0.7rem;color:#6b8aaa;font-family:monospace;margin-bottom:6px;">FRAMEWORKS</div><div style="display:flex;flex-wrap:wrap;gap:5px;">${fw}</div>`;
   }
 
   function projectsCard() {
-    const cards = DATA.projects.map((p, i) => `
-      <div style="background:rgba(0,180,255,0.04);border:1px solid rgba(0,180,255,0.13);border-radius:10px;padding:11px 13px;margin-bottom:8px;">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;">
-          <span style="font-size:0.82rem;font-weight:700;color:#e8f4ff;">${p.emoji} ${p.title}</span>
-          <span style="font-size:0.6rem;color:#7c3aff;font-family:monospace;">P_${String(i+1).padStart(2,'0')}</span>
-        </div>
-        <div style="font-size:0.72rem;color:rgba(232,244,255,0.6);line-height:1.5;margin-bottom:7px;">${p.desc}</div>
-        <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:7px;">
-          ${p.tags.map(t=>`<span style="background:rgba(0,180,255,0.07);border:1px solid rgba(0,180,255,0.15);border-radius:3px;padding:2px 7px;font-size:0.62rem;color:#6b8aaa;font-family:monospace;">${t}</span>`).join('')}
-        </div>
-        <div style="display:flex;align-items:center;justify-content:space-between;">
-          <span style="font-size:0.65rem;color:#00ffcc;font-family:monospace;">✦ ${p.highlight}</span>
-          <a href="${p.github}" target="_blank" style="font-size:0.65rem;color:#00b4ff;font-family:monospace;text-decoration:none;">GitHub →</a>
-        </div>
-      </div>`).join('');
-
-    return `
-      <div style="font-size:0.82rem;font-weight:700;color:#00b4ff;letter-spacing:0.08em;margin-bottom:10px;">🚀 FEATURED PROJECTS (${DATA.projects.length})</div>
-      ${cards}`;
+    const cards = DATA.projects.map((p,i) => `<div style="background:rgba(0,180,255,0.04);border:1px solid rgba(0,180,255,0.13);border-radius:10px;padding:11px 13px;margin-bottom:8px;"><div style="display:flex;justify-content:space-between;margin-bottom:5px;"><span style="font-size:0.82rem;font-weight:700;color:#e8f4ff;">${p.emoji} ${p.title}</span><span style="font-size:0.6rem;color:#7c3aff;font-family:monospace;">P_${String(i+1).padStart(2,'0')}</span></div><div style="font-size:0.72rem;color:rgba(232,244,255,0.6);margin-bottom:7px;">${p.desc}</div><div style="display:flex;justify-content:space-between;align-items:center;"><span style="font-size:0.65rem;color:#00ffcc;font-family:monospace;">✦ ${p.highlight}</span><a href="${p.github}" target="_blank" style="font-size:0.65rem;color:#00b4ff;font-family:monospace;text-decoration:none;">GitHub →</a></div></div>`).join('');
+    return `<div style="font-size:0.82rem;font-weight:700;color:#00b4ff;margin-bottom:10px;">🚀 FEATURED PROJECTS (${DATA.projects.length})</div>${cards}`;
   }
 
   function educationCard() {
-    const cards = DATA.education.map(e => `
-      <div style="background:rgba(124,58,255,0.05);border:1px solid rgba(124,58,255,0.18);border-radius:10px;padding:13px;margin-bottom:10px;">
-        <div style="font-size:0.85rem;font-weight:700;color:#e8f4ff;margin-bottom:3px;">🎓 ${e.degree}</div>
-        <div style="font-size:0.72rem;color:#a78bfa;font-family:monospace;margin-bottom:2px;">${e.institution}</div>
-        <div style="display:flex;gap:10px;margin-bottom:8px;">
-          <span style="font-size:0.68rem;color:#6b8aaa;font-family:monospace;">📅 ${e.year}</span>
-          <span style="font-size:0.68rem;color:#00ffcc;font-family:monospace;">✓ ${e.grade}</span>
-        </div>
-        <div style="font-size:0.68rem;color:#6b8aaa;font-family:monospace;margin-bottom:5px;">KEY TOPICS</div>
-        <div style="display:flex;flex-wrap:wrap;gap:4px;">
-          ${e.highlights.map(h=>`<span style="background:rgba(124,58,255,0.1);border:1px solid rgba(124,58,255,0.2);border-radius:100px;padding:2px 9px;font-size:0.65rem;color:#a78bfa;font-family:monospace;">${h}</span>`).join('')}
-        </div>
-      </div>`).join('');
-
-    return `
-      <div style="font-size:0.82rem;font-weight:700;color:#00b4ff;letter-spacing:0.08em;margin-bottom:10px;">🎓 EDUCATION</div>
-      ${cards}`;
+    const cards = DATA.education.map(e => `<div style="background:rgba(124,58,255,0.05);border:1px solid rgba(124,58,255,0.18);border-radius:10px;padding:13px;margin-bottom:10px;"><div style="font-size:0.85rem;font-weight:700;color:#e8f4ff;margin-bottom:3px;">🎓 ${e.degree}</div><div style="font-size:0.72rem;color:#a78bfa;font-family:monospace;margin-bottom:6px;">${e.institution}</div><div style="font-size:0.68rem;color:#00ffcc;font-family:monospace;">📅 ${e.year} · ✓ ${e.grade}</div></div>`).join('');
+    return `<div style="font-size:0.82rem;font-weight:700;color:#00b4ff;margin-bottom:10px;">🎓 EDUCATION</div>${cards}`;
   }
 
   function experienceCard() {
-    const cards = DATA.experience.map(e => `
-      <div style="background:rgba(0,255,204,0.03);border:1px solid rgba(0,255,204,0.14);border-radius:10px;padding:13px;margin-bottom:10px;">
-        <div style="font-size:0.85rem;font-weight:700;color:#e8f4ff;margin-bottom:2px;">💼 ${e.title}</div>
-        <div style="font-size:0.72rem;color:#00ffcc;font-family:monospace;margin-bottom:2px;">${e.type}</div>
-        <div style="display:flex;gap:12px;margin-bottom:9px;">
-          <span style="font-size:0.67rem;color:#6b8aaa;font-family:monospace;">📅 ${e.duration}</span>
-          <span style="font-size:0.67rem;color:#6b8aaa;font-family:monospace;">📍 ${e.location}</span>
-        </div>
-        <ul style="padding-left:14px;margin:0;">
-          ${e.points.map(p=>`<li style="font-size:0.74rem;color:rgba(232,244,255,0.72);line-height:1.6;margin-bottom:3px;">${p}</li>`).join('')}
-        </ul>
-      </div>`).join('');
-
-    return `
-      <div style="font-size:0.82rem;font-weight:700;color:#00b4ff;letter-spacing:0.08em;margin-bottom:10px;">💼 EXPERIENCE</div>
-      ${cards}`;
+    const cards = DATA.experience.map(e => `<div style="background:rgba(0,255,204,0.03);border:1px solid rgba(0,255,204,0.14);border-radius:10px;padding:13px;margin-bottom:10px;"><div style="font-size:0.85rem;font-weight:700;color:#e8f4ff;margin-bottom:2px;">💼 ${e.title}</div><div style="font-size:0.72rem;color:#00ffcc;font-family:monospace;margin-bottom:2px;">${e.company} · ${e.type}</div><div style="font-size:0.67rem;color:#6b8aaa;font-family:monospace;margin-bottom:9px;">📅 ${e.duration}</div><ul style="padding-left:14px;margin:0;">${e.points.map(p=>`<li style="font-size:0.74rem;color:rgba(232,244,255,0.72);line-height:1.6;margin-bottom:3px;">${p}</li>`).join('')}</ul></div>`).join('');
+    return `<div style="font-size:0.82rem;font-weight:700;color:#00b4ff;margin-bottom:10px;">💼 EXPERIENCE</div>${cards}`;
   }
 
   function aboutCard() {
     const p = DATA.personal;
-    return `
-      <div style="font-size:0.82rem;font-weight:700;color:#00b4ff;letter-spacing:0.08em;margin-bottom:10px;">👤 ABOUT RAMGOPAL M.</div>
-      <div style="background:rgba(0,180,255,0.05);border:1px solid rgba(0,180,255,0.15);border-radius:10px;padding:14px;">
-        <div style="font-size:0.9rem;font-weight:800;color:#fff;margin-bottom:4px;">${p.name}</div>
-        <div style="font-size:0.74rem;color:#00b4ff;font-family:monospace;margin-bottom:10px;">${p.role}</div>
-        <div style="font-size:0.8rem;color:rgba(232,244,255,0.75);line-height:1.65;margin-bottom:12px;">${p.summary}</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:0.68rem;font-family:monospace;">
-          <div><span style="color:#00b4ff;">location</span> → ${p.location}</div>
-          <div><span style="color:#00b4ff;">focus</span> → AI/ML Engineering</div>
-          <div><span style="color:#00b4ff;">languages</span> → Python, SQL</div>
-          <div><span style="color:#00ffcc;">status</span> → Available ✓</div>
-        </div>
-      </div>`;
+    return `<div style="font-size:0.82rem;font-weight:700;color:#00b4ff;margin-bottom:10px;">👤 ABOUT RAMGOPAL M.</div><div style="background:rgba(0,180,255,0.05);border:1px solid rgba(0,180,255,0.15);border-radius:10px;padding:14px;"><div style="font-size:0.9rem;font-weight:800;color:#fff;margin-bottom:4px;">${p.name}</div><div style="font-size:0.74rem;color:#00b4ff;font-family:monospace;margin-bottom:10px;">${p.role}</div><div style="font-size:0.8rem;color:rgba(232,244,255,0.75);line-height:1.65;margin-bottom:12px;">${p.summary}</div><div style="font-size:0.68rem;font-family:monospace;color:#6b8aaa;"><span style="color:#00b4ff;">location</span> → ${p.location} | <span style="color:#00ffcc;">status</span> → Available ✓</div></div>`;
   }
 
   function contactCard() {
     const c = DATA.contact;
-    return `
-      <div style="font-size:0.82rem;font-weight:700;color:#00b4ff;letter-spacing:0.08em;margin-bottom:10px;">📬 CONTACT RAMGOPAL</div>
-      <div style="display:flex;flex-direction:column;gap:8px;">
-        <a href="mailto:${c.email}" style="display:flex;align-items:center;gap:10px;background:rgba(0,255,204,0.05);border:1px solid rgba(0,255,204,0.15);border-radius:9px;padding:11px 13px;text-decoration:none;transition:all 0.2s;">
-          <span style="font-size:1.1rem;">📧</span>
-          <div><div style="font-size:0.68rem;color:#6b8aaa;font-family:monospace;margin-bottom:1px;">EMAIL</div><div style="font-size:0.78rem;color:#00ffcc;">${c.email}</div></div>
-        </a>
-        <a href="${c.linkedin}" target="_blank" style="display:flex;align-items:center;gap:10px;background:rgba(10,102,194,0.07);border:1px solid rgba(10,102,194,0.2);border-radius:9px;padding:11px 13px;text-decoration:none;">
-          <span style="font-size:1.1rem;">💼</span>
-          <div><div style="font-size:0.68rem;color:#6b8aaa;font-family:monospace;margin-bottom:1px;">LINKEDIN</div><div style="font-size:0.78rem;color:#60a5fa;">linkedin.com/in/ramgopal-m</div></div>
-        </a>
-        <a href="${c.github}" target="_blank" style="display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:9px;padding:11px 13px;text-decoration:none;">
-          <span style="font-size:1.1rem;">🐙</span>
-          <div><div style="font-size:0.68rem;color:#6b8aaa;font-family:monospace;margin-bottom:1px;">GITHUB</div><div style="font-size:0.78rem;color:#e8f4ff;">github.com/Ram092003</div></div>
-        </a>
-        <div style="display:flex;align-items:center;gap:10px;background:rgba(0,180,255,0.04);border:1px solid rgba(0,180,255,0.12);border-radius:9px;padding:11px 13px;">
-          <span style="font-size:1.1rem;">📍</span>
-          <div><div style="font-size:0.68rem;color:#6b8aaa;font-family:monospace;margin-bottom:1px;">LOCATION</div><div style="font-size:0.78rem;color:#e8f4ff;">${c.location}</div></div>
-        </div>
-      </div>`;
-  }
-
-  function singleProjectCard(p) {
-    return `
-      <div style="font-size:0.82rem;font-weight:700;color:#00b4ff;letter-spacing:0.08em;margin-bottom:10px;">${p.emoji} PROJECT DETAIL</div>
-      <div style="background:rgba(0,180,255,0.04);border:1px solid rgba(0,180,255,0.18);border-radius:10px;padding:14px;">
-        <div style="font-size:0.9rem;font-weight:800;color:#fff;margin-bottom:6px;">${p.title}</div>
-        <div style="font-size:0.78rem;color:rgba(232,244,255,0.72);line-height:1.6;margin-bottom:10px;">${p.desc}</div>
-        <div style="font-size:0.68rem;color:#6b8aaa;font-family:monospace;margin-bottom:5px;">TECH STACK</div>
-        <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:10px;">
-          ${p.tags.map(t=>`<span style="background:rgba(0,180,255,0.08);border:1px solid rgba(0,180,255,0.18);border-radius:3px;padding:2px 8px;font-size:0.68rem;color:#00b4ff;font-family:monospace;">${t}</span>`).join('')}
-        </div>
-        <div style="font-size:0.68rem;color:#00ffcc;font-family:monospace;margin-bottom:10px;">✦ ${p.highlight}</div>
-        <a href="${p.github}" target="_blank" style="display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#00b4ff22,#7c3aff22);border:1px solid rgba(0,180,255,0.3);border-radius:6px;padding:7px 14px;font-size:0.75rem;color:#00b4ff;text-decoration:none;font-family:monospace;">🐙 View on GitHub →</a>
-      </div>`;
-  }
-
-  function resumeCard() {
-    return `
-      <div style="font-size:0.82rem;font-weight:700;color:#00b4ff;letter-spacing:0.08em;margin-bottom:10px;">📄 RESUME</div>
-      <div style="background:rgba(0,180,255,0.04);border:1px solid rgba(0,180,255,0.15);border-radius:10px;padding:14px;text-align:center;">
-        <div style="font-size:2rem;margin-bottom:8px;">📋</div>
-        <div style="font-size:0.82rem;color:rgba(232,244,255,0.8);margin-bottom:12px;">Ramgopal's resume is available for download directly from the portfolio.</div>
-        <div style="font-size:0.75rem;color:#00b4ff;font-family:monospace;">👆 Click the <strong style="color:#fff;">Resume</strong> button in the top navigation bar to download it instantly.</div>
-      </div>`;
+    return `<div style="font-size:0.82rem;font-weight:700;color:#00b4ff;margin-bottom:10px;">📬 CONTACT RAMGOPAL</div><div style="display:flex;flex-direction:column;gap:8px;"><a href="mailto:${c.email}" style="display:flex;align-items:center;gap:10px;background:rgba(0,255,204,0.05);border:1px solid rgba(0,255,204,0.15);border-radius:9px;padding:11px 13px;text-decoration:none;"><span>📧</span><div><div style="font-size:0.68rem;color:#6b8aaa;font-family:monospace;">EMAIL</div><div style="font-size:0.78rem;color:#00ffcc;">${c.email}</div></div></a><a href="${c.linkedin}" target="_blank" style="display:flex;align-items:center;gap:10px;background:rgba(10,102,194,0.07);border:1px solid rgba(10,102,194,0.2);border-radius:9px;padding:11px 13px;text-decoration:none;"><span>💼</span><div><div style="font-size:0.68rem;color:#6b8aaa;font-family:monospace;">LINKEDIN</div><div style="font-size:0.78rem;color:#60a5fa;">linkedin.com/in/ramgopal-m</div></div></a><a href="${c.github}" target="_blank" style="display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:9px;padding:11px 13px;text-decoration:none;"><span>🐙</span><div><div style="font-size:0.68rem;color:#6b8aaa;font-family:monospace;">GITHUB</div><div style="font-size:0.78rem;color:#e8f4ff;">github.com/Ram092003</div></div></a></div>`;
   }
 
   function helpCard() {
-    const cmds = [
-      ['about','Who is Ramgopal'],['skills','Tech skills & tools'],
-      ['projects','All 7 projects'],['education','Academic background'],
-      ['experience','Work experience'],['contact','Contact details'],
-      ['resume','Download resume'],['github','GitHub profile'],
-      ['linkedin','LinkedIn profile'],['status','Availability']
-    ];
-    return `
-      <div style="font-size:0.82rem;font-weight:700;color:#00b4ff;letter-spacing:0.08em;margin-bottom:10px;">🗺️ WHAT I CAN HELP WITH</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;">
-        ${cmds.map(([cmd,label])=>`
-          <button onclick="document.getElementById('chat-input').value='${cmd}';document.getElementById('chat-send').click();"
-            style="background:rgba(0,180,255,0.06);border:1px solid rgba(0,180,255,0.15);border-radius:7px;padding:7px 8px;text-align:left;cursor:pointer;transition:all 0.2s;"
-            onmouseover="this.style.background='rgba(0,180,255,0.14)'" onmouseout="this.style.background='rgba(0,180,255,0.06)'">
-            <div style="font-size:0.72rem;color:#00b4ff;font-family:monospace;">${cmd}</div>
-            <div style="font-size:0.65rem;color:#6b8aaa;">${label}</div>
-          </button>`).join('')}
-      </div>`;
+    const cmds = [['about','Who is Ramgopal'],['skills','Tech skills'],['projects','All 7 projects'],['education','Academic bg'],['experience','Work experience'],['contact','Contact details']];
+    return `<div style="font-size:0.82rem;font-weight:700;color:#00b4ff;margin-bottom:10px;">🗺️ WHAT I CAN HELP WITH</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;">${cmds.map(([cmd,label])=>`<button onclick="document.getElementById('chat-input').value='${cmd}';document.getElementById('chat-send').click();" style="background:rgba(0,180,255,0.06);border:1px solid rgba(0,180,255,0.15);border-radius:7px;padding:7px 8px;text-align:left;cursor:pointer;" onmouseover="this.style.background='rgba(0,180,255,0.14)'" onmouseout="this.style.background='rgba(0,180,255,0.06)'"><div style="font-size:0.72rem;color:#00b4ff;font-family:monospace;">${cmd}</div><div style="font-size:0.65rem;color:#6b8aaa;">${label}</div></button>`).join('')}</div>`;
   }
 
-  // ─── INTENT RESOLVER ──────────────────────────────────────────────────────
-  // Returns { type, payload? } — one exact category per query
   function resolveIntent(raw) {
-    const q = raw.toLowerCase().replace(/[^\w\s]/g, ' ').trim();
+    const q = raw.toLowerCase().replace(/[^\w\s]/g,' ').trim();
     const words = new Set(q.split(/\s+/));
-
-    // ── Greet
-    if (/^(hi|hello|hey|yo|sup|hola|namaste)$/.test(q) || /^(hi|hello|hey)\s/.test(q))
-      return { type: 'greet' };
-
-    // ── About / Who
-    if (/\b(who|about|introduce|yourself|ramgopal|ram|person|profile|bio|summary)\b/.test(q))
-      return { type: 'about' };
-
-    // ── Skills — strictly skills keywords only
-    if (/\b(skill|skills|tech|stack|technology|technologies|tool|tools|expertise|proficien|know|capable|language|languages|framework|frameworks|library|libraries)\b/.test(q) &&
-        !/\b(project|educat|experience|contact|github|linkedin|resume)\b/.test(q))
-      return { type: 'skills' };
-
-    // ── Education — strictly education keywords
-    if (/\b(educat|degree|college|university|course|courses|study|studied|academic|qualification|certification|certif|school|institution)\b/.test(q) &&
-        !/\b(project|skill|experience|contact)\b/.test(q))
-      return { type: 'education' };
-
-    // ── Experience — strictly experience keywords
-    if (/\b(experience|work|worked|job|jobs|career|background|history|employment|intern|internship|professional|role|roles)\b/.test(q) &&
-        !/\b(project|skill|educat|contact)\b/.test(q))
-      return { type: 'experience' };
-
-    // ── Contact
-    if (/\b(contact|email|reach|message|connect|touch|hire|phone|mail)\b/.test(q) &&
-        !/\b(project|skill|educat|experience)\b/.test(q))
-      return { type: 'contact' };
-
-    // ── Resume / CV
-    if (/\b(resume|cv|curriculum|download|pdf)\b/.test(q))
-      return { type: 'resume' };
-
-    // ── GitHub
-    if (/\b(github|git|repo|repositories|code|source)\b/.test(q) &&
-        !/\b(project|skill|educat|experience|contact)\b/.test(q))
-      return { type: 'github' };
-
-    // ── LinkedIn
-    if (/\b(linkedin|linked in|network|professional network)\b/.test(q))
-      return { type: 'linkedin' };
-
-    // ── Status / Availability
-    if (/\b(status|available|availability|open to work|hiring|looking for|opportunity|opportunities)\b/.test(q))
-      return { type: 'status' };
-
-    // ── Specific project lookup — search by title words and tags
-    for (const p of DATA.projects) {
-      const titleWords = p.title.toLowerCase().split(/\s+/).filter(w => w.length > 3);
-      const tagWords = p.tags.map(t => t.toLowerCase());
-      const allKeywords = [...titleWords, ...tagWords, p.id];
-      if (allKeywords.some(k => words.has(k) || q.includes(k))) {
-        return { type: 'project_detail', payload: p };
-      }
-    }
-
-    // ── All projects list
-    if (/\b(project|projects|built|created|portfolio|work|app|apps|application|applications|system|systems|model|models)\b/.test(q))
-      return { type: 'projects' };
-
-    // ── Help / unknown
-    if (/\b(help|menu|option|options|what can|what do|list|show me|guide)\b/.test(q))
-      return { type: 'help' };
-
-    // ── Positive feedback
-    if (/\b(thank|thanks|great|awesome|cool|nice|perfect|good|wow|amazing|excellent|well done|impressive)\b/.test(q))
-      return { type: 'thanks' };
-
-    // ── Goodbye
-    if (/\b(bye|goodbye|see you|later|exit|cya|take care)\b/.test(q))
-      return { type: 'bye' };
-
-    return { type: 'unknown', payload: raw };
+    if(/^(hi|hello|hey|yo|sup)$/.test(q)||/^(hi|hello|hey)\s/.test(q)) return{type:'greet'};
+    if(/\b(who|about|introduce|yourself|ramgopal|ram|bio|summary)\b/.test(q)) return{type:'about'};
+    if(/\b(skill|tech|stack|tool|expertise|framework|library)\b/.test(q)&&!/\b(project|educat|experience|contact)\b/.test(q)) return{type:'skills'};
+    if(/\b(educat|degree|college|university|course|study|academic|school)\b/.test(q)) return{type:'education'};
+    if(/\b(experience|work|worked|job|career|intern|professional)\b/.test(q)&&!/\b(project|skill|educat|contact)\b/.test(q)) return{type:'experience'};
+    if(/\b(contact|email|reach|connect|hire|mail)\b/.test(q)) return{type:'contact'};
+    if(/\b(resume|cv|download|pdf)\b/.test(q)) return{type:'resume'};
+    if(/\b(github|repo|source)\b/.test(q)) return{type:'github'};
+    if(/\b(linkedin|network)\b/.test(q)) return{type:'linkedin'};
+    if(/\b(status|available|opportunity)\b/.test(q)) return{type:'status'};
+    for(const p of DATA.projects){const kw=[...p.title.toLowerCase().split(/\s+/).filter(w=>w.length>3),...p.tags.map(t=>t.toLowerCase()),p.id];if(kw.some(k=>words.has(k)||q.includes(k)))return{type:'project_detail',payload:p};}
+    if(/\b(project|built|portfolio|app|application|system|model)\b/.test(q)) return{type:'projects'};
+    if(/\b(help|menu|option|what can|guide)\b/.test(q)) return{type:'help'};
+    if(/\b(thank|thanks|great|awesome|nice)\b/.test(q)) return{type:'thanks'};
+    if(/\b(bye|goodbye|later|exit)\b/.test(q)) return{type:'bye'};
+    return{type:'unknown'};
   }
 
-  // ─── RESPONSE DISPATCHER ─────────────────────────────────────────────────
   function dispatch(intent) {
-    switch (intent.type) {
-      case 'greet':
-        return { html: false, text: `👋 Hello! I'm Ram's portfolio assistant.\n\nI give precise, category-specific answers. Try typing:\n\n• skills\n• projects\n• education\n• experience\n• contact\n\nWhat would you like to know?` };
-      case 'about':
-        return { html: true, content: aboutCard() };
-      case 'skills':
-        return { html: true, content: skillsCard() };
-      case 'projects':
-        return { html: true, content: projectsCard() };
-      case 'education':
-        return { html: true, content: educationCard() };
-      case 'experience':
-        return { html: true, content: experienceCard() };
-      case 'contact':
-        return { html: true, content: contactCard() };
-      case 'resume':
-        return { html: true, content: resumeCard() };
-      case 'project_detail':
-        return { html: true, content: singleProjectCard(intent.payload) };
-      case 'github':
-        return { html: false, text: `🐙 GitHub: github.com/Ram092003\n\nAll 7 projects are open-source. You'll find ML, NLP, Deep Learning, and Computer Vision repos with full documentation.` };
-      case 'linkedin':
-        return { html: false, text: `💼 LinkedIn: linkedin.com/in/ramgopal-m\n\nConnect with Ramgopal professionally for collaborations, internships, or job opportunities.` };
-      case 'status':
-        return { html: false, text: `✅ Status: ${DATA.personal.status}\n\nRamgopal is actively seeking AI/ML Engineering and Data Science roles. Contact him at ${DATA.personal.email} or connect on LinkedIn.` };
-      case 'thanks':
-        return { html: false, text: `😊 You're welcome! Need anything else?\n\nTry: skills · projects · education · experience · contact` };
-      case 'bye':
-        return { html: false, text: `👋 Thanks for visiting Ramgopal's portfolio! Feel free to return anytime. Have a great day! 🚀` };
-      case 'help':
-        return { html: true, content: helpCard() };
-      default:
-        return { html: true, content: helpCard() };
+    switch(intent.type) {
+      case 'greet': return{html:false,text:`👋 Hello! I'm Ram's portfolio assistant.\n\nTry typing:\n• skills • projects • education • experience • contact`};
+      case 'about': return{html:true,content:aboutCard()};
+      case 'skills': return{html:true,content:skillsCard()};
+      case 'projects': return{html:true,content:projectsCard()};
+      case 'education': return{html:true,content:educationCard()};
+      case 'experience': return{html:true,content:experienceCard()};
+      case 'contact': return{html:true,content:contactCard()};
+      case 'resume': return{html:false,text:`📄 Click the Resume button in the top navigation bar to download Ramgopal's resume instantly.`};
+      case 'github': return{html:false,text:`🐙 GitHub: github.com/Ram092003\n\nAll 7 projects are open-source with full documentation.`};
+      case 'linkedin': return{html:false,text:`💼 LinkedIn: linkedin.com/in/ramgopal-m\n\nConnect for collaborations or opportunities.`};
+      case 'status': return{html:false,text:`✅ ${DATA.personal.status}\n\nContact: ${DATA.personal.email}`};
+      case 'thanks': return{html:false,text:`😊 You're welcome! Try: skills · projects · education · experience · contact`};
+      case 'bye': return{html:false,text:`👋 Thanks for visiting! Have a great day! 🚀`};
+      case 'project_detail': return{html:true,content:`<div style="font-size:0.82rem;font-weight:700;color:#00b4ff;margin-bottom:10px;">${intent.payload.emoji} PROJECT DETAIL</div><div style="background:rgba(0,180,255,0.04);border:1px solid rgba(0,180,255,0.18);border-radius:10px;padding:14px;"><div style="font-size:0.9rem;font-weight:800;color:#fff;margin-bottom:6px;">${intent.payload.title}</div><div style="font-size:0.78rem;color:rgba(232,244,255,0.72);line-height:1.6;margin-bottom:10px;">${intent.payload.desc}</div><div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:10px;">${intent.payload.tags.map(t=>`<span style="background:rgba(0,180,255,0.08);border:1px solid rgba(0,180,255,0.18);border-radius:3px;padding:2px 8px;font-size:0.68rem;color:#00b4ff;font-family:monospace;">${t}</span>`).join('')}</div><a href="${intent.payload.github}" target="_blank" style="font-size:0.75rem;color:#00b4ff;font-family:monospace;text-decoration:none;">🐙 View on GitHub →</a></div>`};
+      default: return{html:true,content:helpCard()};
     }
   }
 
-  // ─── UI HELPERS ───────────────────────────────────────────────────────────
   function addBotMessage(response) {
-    const wrapper = document.createElement('div');
-    wrapper.className = 'chat-msg bot';
-    if (response.html) {
-      wrapper.innerHTML = `<div class="chat-avatar">🤖</div><div class="chat-bubble" style="max-width:100%;padding:12px 13px;">${response.content}</div>`;
-    } else {
-      wrapper.innerHTML = `<div class="chat-avatar">🤖</div><div class="chat-bubble">${response.text.replace(/\n/g,'<br>')}</div>`;
-    }
-    messagesEl.appendChild(wrapper);
-    messagesEl.scrollTop = messagesEl.scrollHeight;
+    const w = document.createElement('div'); w.className='chat-msg bot';
+    if(response.html) w.innerHTML=`<div class="chat-avatar">🤖</div><div class="chat-bubble" style="max-width:100%;padding:12px 13px;">${response.content}</div>`;
+    else w.innerHTML=`<div class="chat-avatar">🤖</div><div class="chat-bubble">${response.text.replace(/\n/g,'<br>')}</div>`;
+    messagesEl.appendChild(w); messagesEl.scrollTop=messagesEl.scrollHeight;
   }
-
   function addUserMessage(text) {
-    const wrapper = document.createElement('div');
-    wrapper.className = 'chat-msg user';
-    wrapper.innerHTML = `<div class="chat-bubble">${text.replace(/</g,'&lt;')}</div>`;
-    messagesEl.appendChild(wrapper);
-    messagesEl.scrollTop = messagesEl.scrollHeight;
+    const w=document.createElement('div'); w.className='chat-msg user';
+    w.innerHTML=`<div class="chat-bubble">${text.replace(/</g,'&lt;')}</div>`;
+    messagesEl.appendChild(w); messagesEl.scrollTop=messagesEl.scrollHeight;
   }
-
   function addTypingIndicator() {
-    const wrapper = document.createElement('div');
-    wrapper.className = 'chat-msg bot';
-    wrapper.id = 'typing-indicator';
-    wrapper.innerHTML = `<div class="chat-avatar">🤖</div><div class="chat-bubble"><div class="chat-typing"><span></span><span></span><span></span></div></div>`;
-    messagesEl.appendChild(wrapper);
-    messagesEl.scrollTop = messagesEl.scrollHeight;
-    return wrapper;
+    const w=document.createElement('div'); w.className='chat-msg bot'; w.id='typing-indicator';
+    w.innerHTML=`<div class="chat-avatar">🤖</div><div class="chat-bubble"><div class="chat-typing"><span></span><span></span><span></span></div></div>`;
+    messagesEl.appendChild(w); messagesEl.scrollTop=messagesEl.scrollHeight; return w;
   }
-
   function addSuggestions() {
-    const chips = ['skills', 'projects', 'education', 'experience', 'contact'];
-    const row = document.createElement('div');
-    row.className = 'chat-suggestions';
-    chips.forEach(s => {
-      const btn = document.createElement('button');
-      btn.className = 'chat-suggestion-btn';
-      btn.textContent = s;
-      btn.onclick = () => { row.remove(); handleUserMessage(s); };
-      row.appendChild(btn);
-    });
-    messagesEl.appendChild(row);
-    messagesEl.scrollTop = messagesEl.scrollHeight;
+    const chips=['skills','projects','education','experience','contact'];
+    const row=document.createElement('div'); row.className='chat-suggestions';
+    chips.forEach(s=>{const btn=document.createElement('button');btn.className='chat-suggestion-btn';btn.textContent=s;btn.onclick=()=>{row.remove();handleUserMessage(s);};row.appendChild(btn);});
+    messagesEl.appendChild(row); messagesEl.scrollTop=messagesEl.scrollHeight;
   }
-
-  // ─── MAIN HANDLER ─────────────────────────────────────────────────────────
   function handleUserMessage(text) {
-    if (!text.trim()) return;
-    addUserMessage(text);
-    inputEl.value = '';
-    inputEl.style.height = 'auto';
-    const typing = addTypingIndicator();
-    const delay = 380 + Math.random() * 320;
-    setTimeout(() => {
-      typing.remove();
-      const intent = resolveIntent(text);
-      const response = dispatch(intent);
-      addBotMessage(response);
-    }, delay);
+    if(!text.trim()) return;
+    addUserMessage(text); inputEl.value=''; inputEl.style.height='auto';
+    const typing=addTypingIndicator();
+    setTimeout(()=>{typing.remove();addBotMessage(dispatch(resolveIntent(text)));}, 380+Math.random()*320);
   }
-
-  // ─── INIT ─────────────────────────────────────────────────────────────────
   function initChat() {
-    messagesEl.innerHTML = '';
-    addBotMessage({
-      html: false,
-      text: `👋 Hi! I'm Ram's portfolio assistant.\n\nI give precise, category-specific answers — no mixed responses.\n\nJust type what you want to know:`
-    });
+    messagesEl.innerHTML='';
+    addBotMessage({html:false,text:`👋 Hi! I'm Ram's portfolio assistant.\n\nAsk me anything about Ram's skills, projects, education, or experience!`});
     addSuggestions();
   }
 
-  // ─── EVENTS ───────────────────────────────────────────────────────────────
-  toggleBtn.addEventListener('click', () => {
-    const isOpen = chatWindow.classList.toggle('open');
-    toggleBtn.classList.toggle('open', isOpen);
-    if (isOpen && messagesEl.children.length === 0) initChat();
+  toggleBtn.addEventListener('click',()=>{
+    const isOpen=chatWindow.classList.toggle('open');
+    toggleBtn.classList.toggle('open',isOpen);
+    if(isOpen&&messagesEl.children.length===0) initChat();
   });
-  closeBtn.addEventListener('click', () => {
-    chatWindow.classList.remove('open');
-    toggleBtn.classList.remove('open');
-  });
-  sendBtn.addEventListener('click', () => handleUserMessage(inputEl.value));
-  inputEl.addEventListener('keydown', e => {
-    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleUserMessage(inputEl.value); }
-  });
-  inputEl.addEventListener('input', () => {
-    inputEl.style.height = 'auto';
-    inputEl.style.height = Math.min(inputEl.scrollHeight, 80) + 'px';
-  });
-
-  // Cursor hover integration
-  [toggleBtn, chatWindow, sendBtn].forEach(el => {
-    el.addEventListener('mouseenter', () => document.getElementById('cursorRing').classList.add('hover'));
-    el.addEventListener('mouseleave', () => document.getElementById('cursorRing').classList.remove('hover'));
+  closeBtn.addEventListener('click',()=>{chatWindow.classList.remove('open');toggleBtn.classList.remove('open');});
+  sendBtn.addEventListener('click',()=>handleUserMessage(inputEl.value));
+  inputEl.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();handleUserMessage(inputEl.value);}});
+  inputEl.addEventListener('input',()=>{inputEl.style.height='auto';inputEl.style.height=Math.min(inputEl.scrollHeight,80)+'px';});
+  [toggleBtn,chatWindow,sendBtn].forEach(el=>{
+    el.addEventListener('mouseenter',()=>document.getElementById('cursorRing').classList.add('hover'));
+    el.addEventListener('mouseleave',()=>document.getElementById('cursorRing').classList.remove('hover'));
   });
 })();
 </script>
